@@ -264,7 +264,7 @@
 
             <pre id="div_ipinfo"></pre>
             <script>
-                $.get('https://ifconfig.co/json',function(res,status){
+                $.getJSON('https://ifconfig.co/json',function(res,status){
                     $("#div_ipinfo").text(JSON.stringify(res));
                 });
             </script>
