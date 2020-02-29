@@ -1,0 +1,806 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>基于 Tendermint 的区块链漂流瓶简单实现 | </title>
+  <meta name="keywords" content=" tendermint ">
+  <meta name="description" content="基于 Tendermint 的区块链漂流瓶简单实现 | ">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta property="og:type" content="website">
+<meta property="og:title" content="categories">
+<meta property="og:url" content="http://fooforlan.github.io/categories/index.html">
+<meta property="og:site_name" content="">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2020-02-29T06:10:39.000Z">
+<meta property="article:modified_time" content="2020-02-29T06:10:39.110Z">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="icon" href="/img/avatar.jpg">
+
+<link href="/css/style.css?v=1.0.1" rel="stylesheet">
+
+<link href="/css/hl_theme/atom-light.css?v=1.0.1" rel="stylesheet">
+
+<link href="//cdn.bootcss.com/animate.css/3.5.2/animate.min.css" rel="stylesheet">
+<link href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+
+<script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
+<script src="/js/jquery.autocomplete.min.js?v=1.0.1" ></script>
+
+<script src="//cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+<script>
+    hljs.initHighlightingOnLoad();
+</script>
+
+<script src="//cdn.bootcss.com/nprogress/0.2.0/nprogress.min.js"></script>
+
+
+
+<script src="//cdn.bootcss.com/jquery-cookie/1.4.1/jquery.cookie.min.js" ></script>
+
+<script src="/js/iconfont.js?v=1.0.1" ></script>
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+<div style="display: none">
+  <input class="theme_disqus_on" value="false">
+  <input class="theme_preload_comment" value="false">
+  <input class="theme_blog_path" value="">
+</div>
+
+<body>
+<aside class="nav">
+    <div class="nav-left">
+        <a href="/" class="avatar_target">
+    <img class="avatar" src="https://picsum.photos/100" />
+</a>
+<div class="author">
+    <span></span>
+</div>
+
+<div class="icon">
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+</div>
+
+
+
+<a class="more-menus">更多菜单</a>
+
+
+<ul>
+    <li><div class="all active">全部文章<small>(5)</small></div></li>
+    
+        
+            
+            <li><div data-rel="区块链">区块链<small>(4)</small></div>
+                
+            </li>
+            
+        
+    
+        
+            
+            <li><div data-rel="安装部署">安装部署<small>(1)</small></div>
+                
+            </li>
+            
+        
+    
+</ul>
+<div class="left-bottom">
+    <div class="menus">
+    
+    
+    <a class="dynamic-menu site_url"   href="/tools">工具其它</a>
+    
+    
+    
+    </div>
+    <div></div>
+</div>
+<input type="hidden" id="yelog_site_posts_number" value="5">
+<input type="hidden" id="yelog_site_word_count" value="19.4k">
+<div style="display: none">
+    <span id="busuanzi_value_site_uv"></span>
+    <span id="busuanzi_value_site_pv"></span>
+</div>
+
+    </div>
+    <div class="nav-right">
+        <div class="friends-area">
+    <div class="friends-title">
+        友情链接
+        <i class="back-title-list"></i>
+    </div>
+    <div class="friends-content">
+        <ul>
+            
+            <li><a target="_blank" href="http://yelog.org/">叶落阁</a></li>
+            
+        </ul>
+    </div>
+</div>
+        <div class="title-list">
+    <form onkeydown="if(event.keyCode === 13){return false;}">
+        <input id="local-search-input" class="search" type="text" placeholder="以 in: 开头进行全文搜索" />
+        <i class="cross"></i>
+        <span>
+            <label for="tagswitch">Tags:</label>
+            <input id="tagswitch" type="checkbox" style="display: none" />
+            <i id="tagsWitchIcon"></i>
+        </span>
+    </form>
+    <div class="tags-list">
+    
+    <li class="article-tag-list-item">
+        <a class="color5">PBFT</a>
+    </li>
+    
+    <li class="article-tag-list-item">
+        <a class="color5">Hexo</a>
+    </li>
+    
+    <li class="article-tag-list-item">
+        <a class="color5">RAFT</a>
+    </li>
+    
+    <li class="article-tag-list-item">
+        <a class="color1">tendermint</a>
+    </li>
+    
+    <div class="clearfix"></div>
+</div>
+
+    
+    <div id="local-search-result">
+
+    </div>
+    
+    <nav id="title-list-nav">
+        
+        <a  class="区块链 "
+           href="/2020/02/29/pbft-algorithm/"
+           data-tag="PBFT"
+           data-author="" >
+            <span class="post-title" title="PBFT实用拜占庭容错算法深入详解">PBFT实用拜占庭容错算法深入详解</span>
+            <span class="post-date" title="2020-02-29 18:31:28">2020/02/29</span>
+        </a>
+        
+        <a  class="安装部署 "
+           href="/2020/02/29/hexo-setup/"
+           data-tag="Hexo"
+           data-author="" >
+            <span class="post-title" title="Hexo Setup">Hexo Setup</span>
+            <span class="post-date" title="2020-02-29 14:10:39">2020/02/29</span>
+        </a>
+        
+        <a  class="区块链 "
+           href="/2020/02/29/blockchain-pbft-concept/"
+           data-tag="PBFT"
+           data-author="" >
+            <span class="post-title" title="区块链初探">区块链初探</span>
+            <span class="post-date" title="2020-02-29 18:17:35">2020/02/29</span>
+        </a>
+        
+        <a  class="区块链 "
+           href="/2020/02/29/raft-pbft-algorithm/"
+           data-tag="PBFT,RAFT"
+           data-author="" >
+            <span class="post-title" title="深入剖析区块链的共识算法 Raft &amp; PBFT">深入剖析区块链的共识算法 Raft &amp; PBFT</span>
+            <span class="post-date" title="2020-02-29 18:50:23">2020/02/29</span>
+        </a>
+        
+        <a  class="区块链 "
+           href="/2020/02/29/tendermint-demo-msg-bottle/"
+           data-tag="tendermint"
+           data-author="" >
+            <span class="post-title" title="基于 Tendermint 的区块链漂流瓶简单实现">基于 Tendermint 的区块链漂流瓶简单实现</span>
+            <span class="post-date" title="2020-02-29 19:06:07">2020/02/29</span>
+        </a>
+        
+    </nav>
+</div>
+    </div>
+    <div class="hide-list">
+        <div class="semicircle">
+            <div class="brackets first"><</div>
+            <div class="brackets">&gt;</div>
+        </div>
+    </div>
+</aside>
+<div class="post">
+    <div class="pjax">
+        <article id="post-tendermint-demo-msg-bottle" class="article article-type-post" itemscope itemprop="blogPost">
+    
+        <h1 class="article-title">基于 Tendermint 的区块链漂流瓶简单实现</h1>
+    
+    <div class="article-meta">
+        
+        
+        
+        <span class="book">
+            
+                <a  data-rel="区块链">区块链</a>
+            
+        </span>
+        
+        
+        <span class="tag">
+            
+            <a class="color1">tendermint</a>
+            
+        </span>
+        
+    </div>
+    <div class="article-meta">
+        
+        创建时间:<time class="date" title='更新时间: 2020-02-29 19:10:21'>2020-02-29 19:06</time>
+        
+    </div>
+    <div class="article-meta">
+        
+        <span>字数:4.9k</span>
+        
+        
+        <span id="busuanzi_container_page_pv">
+            阅读:<span id="busuanzi_value_page_pv">
+                <span class="count-comment">
+                    <span class="spinner">
+                      <div class="cube1"></div>
+                      <div class="cube2"></div>
+                    </span>
+                </span>
+            </span>
+        </span>
+        
+        
+    </div>
+    
+    <div class="toc-ref">
+    
+        
+    
+<style>
+    .left-col .switch-btn,
+    .left-col .switch-area {
+        display: none;
+    }
+    .toc-level-3 i,
+    .toc-level-3 ol {
+        display: none !important;
+    }
+</style>
+</div>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <blockquote>
+<p>本文由 <a href="http://ksria.com/simpread/" target="_blank" rel="noopener">简悦 SimpRead</a> 转码， 原文地址 <a href="https://www.cnblogs.com/newton/p/9611340.html" target="_blank" rel="noopener">https://www.cnblogs.com/newton/p/9611340.html</a></p>
+</blockquote>
+<p>本文主要借 demo 介绍基于 Tendermint 的区块链应用开发，这个 demo 很简单，主要包含以下功能：</p>
+<ol>
+<li>扔漂流瓶</li>
+<li>捞漂流瓶</li>
+<li>之后投放者和打捞者可以相互传递 [加密] 信息</li>
+</ol>
+<p>代码已上传至 <a href="https://github.com/tuoxieyz/driftbottle" target="_blank" rel="noopener">github</a>。</p>
+<p><strong>Tendermint</strong></p>
+<p>Tendermint 帮我们实现了 PBFT，相当于搭了一个共识框架，包含两部分：</p>
+<ul>
+<li>Tendermint-core：PBFT 共识算法实现；</li>
+<li>Tendermint-abci：定义了应用须实现的接口和调用规则，还实现了与外部通信的 socket-server。官方的这部分源码可以看做是 Go-abci，我们也可以根据需要编写其它语言的 xxx-abci。</li>
+</ul>
+<p>可以将其类比为传统应用的开发框架（如 MVC），而我们要做的就是基于 abci 编写具体的区块链逻辑（为方便和清晰起见，本文用 Go 编写具体逻辑，自然 abci 就用官方的了），这就实现了服务端；而用户也需要一个客户端用来与区块链交互。</p>
+<p><img src="/2020/02/29/tendermint-demo-msg-bottle/474041-20180926105447752-2024285703.png" alt></p>
+<p>以上，Tendermint、服务端逻辑、客户端，三者组成了一个完整的区块链应用。</p>
+<p><strong>数据库</strong></p>
+<p>在动手编码之前，要考虑数据存储的问题，选择文本文件还是 Oracle 呢？区块链网络里大部分是普通电子设备，使用者亦是普通人，让他们事先安装大型数据库显然不现实，更不用说区块链本身不会出现复杂操作数据的业务。另外由于全节点数据的完备性，用不着通过网络去其它设备上查询数据，很多数据库自带的网络服务也不需要（SPV 这种，业务单一，完全可以单独开放一个远程接口）。而文本文件、excel 之类的，只适合人类使用，根本不能算作数据引擎。我们需要的是一个满足基本 CUID 的高效的本地数据库，目前大多区块链使用 LevelDB 作为存储引擎，这是 C/C++ 编写的本地 kv 数据库，原作者也写了 <a href="https://github.com/syndtr/goleveldb" target="_blank" rel="noopener">Go 实现的版本</a>，其原理可参看 <a href="https://blog.csdn.net/qq_26499321/article/details/78063856" target="_blank" rel="noopener">半小时学会 LevelDB 原理及应用</a> ，godoc 地址：<a href="https://godoc.org/github.com/syndtr/goleveldb/leveldb" target="_blank" rel="noopener">https://godoc.org/github.com/syndtr/goleveldb/leveldb</a>。LevelDB 总体上采用了 LSM-Tree 的设计思想（LSM-Tree 的虽说是数据结构，但更偏重于设计思路）。</p>
+<p><em>LevelDB 同时只能被一个进程使用。另，以太坊的数据存储于 / chaindata 目录下，运行后其下会生成一坨. ldb 文件，而非网上常说的 sst 文件，这可能是跟 13 年的一次版本更新有关，<a href="https://github.com/google/leveldb/commit/0b9a89f40efdd143fa1426e7d5cd997f67ba6361" target="_blank" rel="noopener">Release LevelDB 1.14</a>。另：LevelDB 的 k-v 模式（顺序读效率不高）不适合 relationship，即不适合有一定数据关联度的业务场景。</em></p>
+<p>为方便使用，可以封装一些常用的数据库操作。顺便尝试下提供新操作的几种思路。</p>
+<ol>
+<li><p>直接给 leveldb.DB 增加新方法：  </p>
+<pre><code>// 给leveldb.DB增加Set方法
+func (db *leveldb.DB) Set(key []byte, value []byte) {
+    //...
+    err := db.Put(key, value, nil)
+    //...
+}
+</code></pre><p>然而，给一个类型新增方法只能在该类型同个 package 中，否则编译时会报 “Cannot define new methods on non-local type XXXX” 的错误。此时，可以怀念下 C# 的扩展方法。</p>
+</li>
+<li><p>既然无法在外部修改 leveldb.DB 的方法集，那么就在当前 package 建一个继承 leveldb.DB 的 struct，即内嵌一个 leveldb.DB 类型字段， type GoLevelDB struct { *leveldb.DB } ，然后将上述代码的指针类型改为 * GoLevelDB 即可，很完美。不过，在封装 Get 方法的时候出问题了：  </p>
+<pre><code>func (db *GoLevelDB) Get(key []byte) []byte {
+    //...
+    //Go不支持重载，或者说Go只把方法名作为唯一签名。
+    //这里原意是调用的父类的Get方法，但该方法被当前类的Get方法覆盖了，参数不一致导致编译失败
+    res, err := db.Get(key, nil)
+    //...
+    return res
+}
+</code></pre></li>
+</ol>
+<pre><code>不支持重载，只能修改子类的方法名，蛋疼；或者改成如下方式。</code></pre><ol start="3">
+<li><pre><code>type GoLevelDB struct {
+    db *leveldb.DB
+}
+</code></pre><p>和第 2 种的区别就是把 is-a 改为 has-a，也不用担心方法重名的问题。不过我私以为若 Go 支持重载，第 2 种方式会好一点，至少不会嵌套太多层。</p>
+</li>
+</ol>
+<p><strong>服务端</strong></p>
+<p>abci 定义了如下接口：</p>
+<pre><code>type Application interface {
+    // Info/Query Connection
+    Info(RequestInfo) ResponseInfo                // Return application info
+    SetOption(RequestSetOption) ResponseSetOption // Set application option
+    Query(RequestQuery) ResponseQuery             // Query for state
+
+    // Mempool Connection
+    CheckTx(tx []byte) ResponseCheckTx // Validate a tx for the mempool
+
+    // Consensus Connection
+    InitChain(RequestInitChain) ResponseInitChain    // Initialize blockchain with validators and other info from TendermintCore
+    BeginBlock(RequestBeginBlock) ResponseBeginBlock // Signals the beginning of a block
+    DeliverTx(tx []byte) ResponseDeliverTx           // Deliver a tx for full processing
+    EndBlock(RequestEndBlock) ResponseEndBlock       // Signals the end of a block, returns changes to the validator set
+    Commit() ResponseCommit                          // Commit the state and return the application Merkle root hash
+}
+</code></pre><p>很明显，后面几个方法参与了区块链状态的更迭，我们就来捋捋交易从客户端提交到最终上链的过程（不精确）：</p>
+<ol>
+<li>节点 a 的客户端发起一笔交易 tx；</li>
+<li>节点 a 服务端调用 CheckTx 方法校验 tx 是否合法，若非法则丢弃，当做什么事都没发生过；</li>
+<li>若合法，则将 tx 加入到本地 mempool 中，并向其它节点广播 tx；</li>
+<li>其它节点接收到 tx，同样执行 2-3 步骤；</li>
+<li>某轮决议开始，提议者搜集 mempool 中的 txs，并发起投票，达成共识后，各节点调用 BeginBlock 开始将它们打包；</li>
+<li>调用 DeliverTx 执行每笔交易并将其记录到区块中（一笔交易执行一次 DeliverTx）；</li>
+<li>调用 EndBlock 表示打包完成；</li>
+<li>发起共识决议，提议者将新区块广播给其它验证者；（共识决议在第 5 步完成）</li>
+<li>其它验证者接收到区块后，调用 DeliverTx 执行每笔交易并校验结果，若没问题则广播 commit 请求（预提交）和新区块；</li>
+<li>若节点收到超过 2/3 验证者的 commit 请求，调用 Commit 方法，更新整个应用状态。</li>
+</ol>
+<p>假如将要打包的 tx 缓存起来，我们就可以在 DeliverTx、EndBlock、Commit 三个方法中选择其一实际执行 tx，但是一般来说，交易执行都是放在 DeliverTx，比较符合语义。EndBlock 用于更新共识参数和 Val 集合，Commit 用于更新整个应用状态（apphash），需要注意的是，本次提交的 apphash 若与上次提交的不同，则会继续产生新的区块（不管有没有新交易，就算设置 consensus.create_empty_blocks=false，tendermint 也会产生空区块，可参看 <a href="https://github.com/cosmos/ethermint/issues/308" target="_blank" rel="noopener">Enable no empty blocks #308</a> 。），这似乎是 tendermint 的有意设计，但不知为何。</p>
+<p>另 Query 方法接收的 RequestQuery 类型参数有 Path 和 Data 两个字段，Path 是 string 类型，Data 是 []byte，应该是对应于 Http 的 get、post。示例代码中我是通过正则表达式解析 Path 查询各类数据，其实若是复杂查询 / 结构化查询，还是 Data 字段比较实用。</p>
+<p><em>正则表达式的所谓零宽断言：只匹配位置，而不消费字符。下面举个例子。如 \b\w<em>q[^u]\w</em>\b，它能匹配 “Iraq,Benq”。因为[^u] 总是匹配一个字符，所以如果 q 是单词的最后一个字符的话，后面的 [^u] 将会匹配 q 后面的单词分隔符 (可能是空格，或者是句号或其它的什么)，接着后面的 \ w+\b 将会匹配下一个单词，于是 \ b\w<em>q[^u]\w</em>\b 就能匹配整个 Iraq fighting。如果在这个例子中，我们只想匹配到 Iraq，那么可以采用零宽负向先行断言(?!exp) 的方式，\b\w<em>q(?!u)\w</em>\b，它将不会消费 Iraq 后面的空格或逗号等字符，因此 \ w * 也不会匹配到下一个单词。参看 <a href="https://www.cnblogs.com/sunny3096/p/7201403.html" target="_blank" rel="noopener">【详细】正则表达式 30 分钟入门教程</a> 之位置指定和后向位置指定部分。</em></p>
+<p><strong>客户端</strong></p>
+<p>demo 采用命令行终端，基于 cobra 库。</p>
+<pre><code> var rootCmd = &amp;cobra.Command{
+     Use:   &quot;dbcli&quot;,
+     //throw:丢；salvage:捞；reply:回应。 ValidArgs要有定义Run[E]，并与Args: cobra.OnlyValidArgs结合才起作用，表示参数值只能是预设值
+      //ValidArgs: []string{&quot;throw&quot;, &quot;salvage&quot;, &quot;reply&quot;, &quot;bbalj&quot;},
+      //Args主要是用来校验参数的
+      //Args: cobra.OnlyValidArgs, //cobra.ExactArgs(0),
+      // RunE: func(cmd *cobra.Command, args []string) error { //args并不包含flag；os.Args是包含flag的
+     // },
+ }
+
+ func main() {
+     if err := rootCmd.Execute(); err != nil {
+         fmt.Println(err)
+         os.Exit(-1)
+     }
+ }
+</code></pre><p>原本我想实现交互模式（类似 mysql&gt;），但 cobra 似乎没有提供相关方法，我们只好自己想办法，需要注意的是需要自解析用户输入，比如用户输入有空格，该空格是分隔参数还是参数内部的，要做区分。原本打算参考 cobra 解析命令行的源码，发现实际解析使用的是 spf13/pflag 库，而 pflag 只是加强了 go 标准库 flag，而 flag 库也并没有涉及到参数值本身的具体解析，这部分工作依靠的是 oa 库，主要是 oa.Args 属性，它依赖更底层的代码。</p>
+<pre><code>// 摘自go/src/os/proc.go
+
+// Args hold the command-line arguments, starting with the program name.
+var Args []string
+
+func init() {
+    if runtime.GOOS == &quot;windows&quot; {
+        // Initialized in exec_windows.go.
+        return
+    }
+    Args = runtime_args()
+}
+
+func runtime_args() []string // in package runtime
+</code></pre><p>如注释所示，windows 下是在 exec_windows.go 中实现，其它操作系统的实现没找到，应该是使用其它语言编写或直接调用的系统 api。进 exec_windows.go 中，发现关键函数 readNextArg：</p>
+<pre><code> // readNextArg splits command line string cmd into next
+ // argument and command line remainder.
+ func readNextArg(cmd string) (arg []byte, rest string) {
+     var b []byte
+     var inquote bool
+     var nslash int
+     for ; len(cmd) &gt; 0; cmd = cmd[1:] {
+         c := cmd[0]
+         switch c {
+         case &#39; &#39;, &#39;\t&#39;:
+             if !inquote {
+                 return appendBSBytes(b, nslash), cmd[1:]
+             }
+         case &#39;&quot;&#39;:
+             b = appendBSBytes(b, nslash/2)
+             if nslash%2 == 0 {
+                 // use &quot;Prior to 2008&quot; rule from
+                 // http://daviddeley.com/autohotkey/parameters/parameters.htm
+                 // section 5.2 to deal with double double quotes
+                 if inquote &amp;&amp; len(cmd) &gt; 1 &amp;&amp; cmd[1] == &#39;&quot;&#39; {
+                     b = append(b, c)
+                     cmd = cmd[1:]
+                 }
+                 inquote = !inquote
+             } else {
+                 b = append(b, c)
+             }
+             nslash = 0
+             continue
+         case &#39;\\&#39;:
+             nslash++
+             continue
+         }
+         b = appendBSBytes(b, nslash)
+         nslash = 0
+         b = append(b, c)
+     }
+     return appendBSBytes(b, nslash), &quot;&quot;
+ }
+</code></pre><p>其中对双引号做了处理，注释中还提供了一个网址 <a href="http://daviddeley.com/autohotkey/parameters/parameters.htm" target="_blank" rel="noopener">How Command Line Parameters Are Parsed</a>，应该是关于这方面的算法说明，日后再看。</p>
+<p><strong>序列化</strong></p>
+<p>当我们在说序列化的时候，我们在说什么。序列化说白了就是数据转化，或者说一一对应的映射关系。就内存场景来说，一个对象序列化为另一个对象，本质上它们都一样，都是存储在内存中的 0、1 序列，只是同一个东西不同的数据表达。比如将一个数值序列化（或者说转化）成字符串类型，或者将数值 int32 转为数值 int8，那么内存中的存储空间和存储数据都不会一样，字符串还要看用的什么编码。再如我们将一个对象序列化为 byte[]，不同的方案会产生不同的结果。比如使用 C 指针将物理数据直接映射出来，或者以 json 方式序列化，或者 protobuf 序列化，会产生不同的 byte[]；反之亦然。</p>
+<p>不管是 json 编码还是二进制编码，物理上存储的都是二进制，json 编码包含于二进制编码，我们可以根据需要自定义二进制编码，一般是为了减少存储占用的空间。比如 json 编码，对 1、2 等数值类型是按字符串格式编码（如 utf8 格式，1 编码的就是 0x31,12 占两个字节 0x310x32），而我们自定义二进制，完全可以把 12 存储在一个字节里面，该字节值就是数值本身；就算不是数值，而是字符串本身编码，我们也可以在 utf8 编码后再压缩，类似 gzip。</p>
+<p>go 中的序列化方式，可参看 <a href="https://blog.csdn.net/fengfengdiandia/article/details/79986237" target="_blank" rel="noopener">Golang 序列化方式及对比</a>，但是文中 gob 的测试代码其实可以改良下，将 enc/dec 两个变量移到循环外，如此可在循环内复用，这将发挥 gob 上下文的优势。</p>
+<p>protobuf 的变长编码针对的是数值类型，so 应该只对数值字段多的类型有压缩的意义。</p>
+<p>go 对字符串是 utf8 编码，基本不用担心中文乱码问题。</p>
+<p><strong>vscode-go 开发环境</strong></p>
+<p>在国内，搭建 Go 开发环境都不会太顺利，下面我就说说在 vscode 中搭建环境可能会遇到的问题和解决方法。</p>
+<p>Go 开发环境需要 vscode 安装一些插件，而项目中也有引用的类库，这两者都可能涉及到相关站点在墙外的情况，而我们也要分别设置代理。首先，给 vscode 本身设置代理，使得安装插件没有问题；其次，在命令行窗口设置 http_proxy，使得 dep 顺利进行。也可以在 vscode 终端窗口设置 http_proxy（vscode 的终端就是个命令行交互环境，使用的还是操作系统的 shell，本质上独立于 vscode），但博主发现似乎并不起作用。</p>
+<p><em>在代理什么都设置好后，vscode 安装插件时仍可能遇到问题，比如文件中已经存在的 golang.org\x\tools 目录关联的 git 源码网址不是插件要求的源码网址，原因可能是之前手动到 github 里下载的 tools 源码，将 tools 目录移除重新跑一遍安装插件的步骤即可。</em></p>
+<p>安装 goimports 时可能会 timeout 等错误，参考 <a href="http://www.cnblogs.com/sysnap/p/7049663.html" target="_blank" rel="noopener">安装 goimports</a> 解决。</p>
+<p>项目方面，具体到我们这个 demo，遵照 tendermint 官方文档，make get_tools。我是 windows10 系统，使用 bash 命令进入到自带的 Ubuntu 子系统，就可以使用内置的 make 了。需要注意的是，若设置了系统变量 GOPATH，且是以分号分隔的多个文件夹，那么切换到 Ubuntu 后，由于 linux 系统是按冒号分隔的，所以它会把分号当做文件夹名的一部分，导致自动创建一些奇怪目录。如果是其它 windows 系统，可以安装 mingw，定位到安装目录的 bin 目录下，就可以使用 mingw-make 操作了（可以将 mingw-make 重命名为 make），可能会报错：</p>
+<pre><code>process_begin: CreateProcess(NULL, env bash F:\Document\code\tendermint\tendermint\scripts\get_tools.sh, ...) failed.
+make (e=2): 系统找不到指定的文件。
+</code></pre><p>如果不是 get_tools.sh 的路径问题，那就应该是 bash 冲突了（比如系统中安装了 git，同时把 git 目录也配置到 PATH 下，实际定位的可能就是 git 的 bash 了）。</p>
+<p>注意 tendermint 所需的最低 Go 版本。</p>
+<p>我们要严格遵循 Go 的目录规范，若将代码直接置于 src \ 目录下，则执行 dep 相关操作时，会抛出 “root project import: dep does not currently support using GOPATH/src as the project root” 错误。需要在 src \ 下再建一个目录，把代码拷进这个子目录再执行 dep。Go 遵循约定大于配置的原则，它在项目中引入所有依赖类库的代码，而这些类库也是放置于 src 目录下，所以需要按子目录分开。另关于依赖项搜寻 <a href="https://github.com/golang/dep/pull/313#issuecomment-285918383" target="_blank" rel="noopener">Support vendor directory as $GOPATH/src/vendor #313</a> 应该有参考价值，另可参看 <a href="https://github.com/golang/dep/issues/148" target="_blank" rel="noopener">dep init fails if in not in $GOPATH[…]/src/{somedir..} #148</a>。</p>
+<p>dep 似乎会将 GOPATH\src 下的依赖也复制到 vendor 下，感觉是不是没这必要。</p>
+<p>经验：最好在项目刚开始搭建就 dep init，否则在代码敲了一个阶段后，已经 import 了多个外部依赖，当这时候再 dep init，如果出现错误，将不会生成 Gopkg.toml，如果是因为版本问题导致的错误，你都没办法通过编辑 Gopkg.toml 的方式解决。比如我就遇到这种情况，dep init -gopath， -gopath 表示先去本地 GOPATH 目录找依赖库，找不到再去网上拉取，结果我的本地库版本不是 master 分支，而貌似 dep 默认的就是 master，导致 “v0.30.2: Could not introduce github.com/tendermint/tendermint@v0.30.2, as it is not allowed by constraint master from project tuoxie/driftbottle.” 这样的错误提示（dep 也是一根筋，它会把这个库的所有 release 版本都比对一遍看满不满足 constraint）。此时也不是没办法，我们可以把入口函数 main 所在文件整个注释掉，这样 dep 就不会遍历代码文件，但仍然会生成 Gopkg.toml，这个时候就可以手动编辑约束版本号了。</p>
+<p>go install 不会把 vendor 目录下的所有包无脑打包进 exe 文件，而是会根据实际依赖打包，这样也使得我们可以多个 [子] 项目使用同一个 vendor，减小磁盘占用和复用已下载的依赖包，而不必担心 exe 文件过大的问题。</p>
+<p>目前 vscode 调试 go 尚不能支持交互模式的命令行调试，没有如 python 那样可以在 launch.json 设置 console 属性 [为 externalTerminal]。</p>
+<p><strong>其它</strong></p>
+<p>作为区块链最广泛应用的数字货币已经不再像不久以前一样能够随意撩拨投机者的神经，但这项技术在其它更实用的领域或许仍值得期待。比如区块链的共识机制、区块时间戳、防篡改特性，似乎天生是为知识产权保护打造的，然而迄今为止市面上尚未出现让人眼前一亮的产品。前段时间看到一则新闻，说百度上线了一个保护图片版权的区块链项目 “图腾”，有兴趣的同学可以去了解下。如果我要实现类似的知识产权链，会考虑文件相似度判别、[使用代币] 支付版权费及支付策略（买断 or 按次付款等）等等，交易媒介和交易标的都在链上，形成闭环。链上闭环可不受外部实体困扰，以区块链二代的明星特性 “智能合约” 为例，一旦与外部有所关联，就无法保证合约的事务完整性，可参看我之前的<a href="https://www.cnblogs.com/newton/p/9443006.html#znhyza" target="_blank" rel="noopener">观点</a>。</p>
+<p>Tendermint 里有很多 ethereum 的影子，比如 gas、db 的封装等，部分思路和代码应该是参考了 ethereum 的实现。</p>
+<p><strong>ethereum（以太坊）相关概念：</strong></p>
+<p>MPT：即 Merkle Patricia Tree，是 Merkle Tree 和 Patricia Tree 结合的产物。Patricia Tree 又是 Trie Tree 的一种变化。参考资料：<a href="https://blog.csdn.net/wsyw126/article/details/61416055" target="_blank" rel="noopener">Trie 原理以及应用于搜索提示</a>，<a href="https://blog.csdn.net/itleaks/article/details/79992072" target="_blank" rel="noopener">以太坊 MPT 原理，你最值得看的一篇</a>。这两篇偏向于原理，若要了解具体细节，可看 <a href="https://ethfans.org/posts/merkle-patricia-tree-in-detail" target="_blank" rel="noopener">干货 | Merkle Patricia Tree 详解</a>。</p>
+<p>叔区块</p>
+<p>gas：一直很好奇以太坊是怎么做到计算实际使用 gas 量的，特别是有控制跳转语句的时候，最可靠的方式是实际运行时实时计算 gas，那这个应该是由 EVM 实现的。具体可看 <a href="https://blog.csdn.net/weixin_41545330/article/details/79474689" target="_blank" rel="noopener">以太坊虚拟机及交易的执行</a>，<a href="https://blog.csdn.net/mongo_node/article/details/80216079" target="_blank" rel="noopener">以太坊智能合约虚拟机 (EVM) 原理与实现</a>。</p>
+<p>数据结构与存储方式：<a href="https://blog.csdn.net/itleaks/article/details/80094294" target="_blank" rel="noopener">以太坊源码情景分析之数据结构</a>，<a href="https://blog.csdn.net/teaspring/article/details/75390210" target="_blank" rel="noopener">[以太坊源代码分析] II. 数据的呈现和组织，缓存和更新</a></p>
+<p><strong>个人认为区块链目前普遍存在的问题：</strong></p>
+<ul>
+<li>升级困难（侧链？）</li>
+<li>维护困难（当单节点故障时，只能依靠该节点自身能力处理，对于普通用户来说，无疑是棘手的）</li>
+<li>随着时间的推移，数据量会变得越来越大，全节点将相应变少，最终形成某种意义上的中心化网络</li>
+</ul>
+<p>更多资料：</p>
+<p><a href="https://www.jianshu.com/p/bbf956f3ffaa" target="_blank" rel="noopener">以太坊源码深入分析（7）– 以太坊 Downloader 源码分析</a></p>
+<p>转载请注明本文出处：<a href="https://www.cnblogs.com/newton/p/9611340.html" target="_blank" rel="noopener" title="view: 基于Tendermint的区块链漂流瓶简单实现">https://www.cnblogs.com/newton/p/9611340.html</a></p>
+
+      
+       <hr><span style="font-style: italic;color: gray;"> 转载请注明来源，欢迎对文章中的引用来源进行考证，欢迎指出任何有错误或不够清晰的表达。可以在下面评论区评论。 </span>
+    </div>
+</article>
+
+
+
+<div class="article_copyright">
+    <p><span class="copy-title">文章标题:</span>基于 Tendermint 的区块链漂流瓶简单实现</p>
+    <p><span class="copy-title">文章字数:</span><span class="post-count">4.9k</span></p>
+    <p><span class="copy-title">本文作者:</span><a  title=""></a></p>
+    <p><span class="copy-title">发布时间:</span>2020-02-29, 19:06:07</p>
+    <p><span class="copy-title">最后更新:</span>2020-02-29, 19:10:21</p>
+    <span class="copy-title">原始链接:</span><a class="post-url" href="/2020/02/29/tendermint-demo-msg-bottle/" title="基于 Tendermint 的区块链漂流瓶简单实现">http://fooforlan.github.io/2020/02/29/tendermint-demo-msg-bottle/</a>
+    <p>
+        <span class="copy-title">版权声明:</span><i class="fa fa-creative-commons"></i> <a rel="license noopener" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" title="CC BY-NC-SA 4.0 International" target = "_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
+    </p>
+</div>
+
+
+
+
+
+    
+
+
+
+
+    </div>
+    <div class="copyright">
+        <p class="footer-entry">©2019-0000</p>
+<p class="footer-entry">Built with <a href="https://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/yelog/hexo-theme-3-hexo" target="_blank">3-hexo</a> theme</p>
+
+    </div>
+    <div class="full-toc">
+        <button class="full"><span class="min "></span></button>
+<button class="post-toc-menu"><span class="post-toc-menu-icons"></span></button>
+<div class="post-toc"><span class="post-toc-title">目录</span>
+    <div class="post-toc-content">
+
+    </div>
+</div>
+<a class="" id="rocket" ></a>
+
+    </div>
+</div>
+<div class="acParent"></div>
+
+</body>
+<script src="/js/jquery.pjax.js?v=1.0.1" ></script>
+
+<script src="/js/script.js?v=1.0.1" ></script>
+<script>
+    var img_resize = 'default';
+    /*作者、标签的自动补全*/
+    $(function () {
+        $('.search').AutoComplete({
+            'data': ['#PBFT','#Hexo','#RAFT','#tendermint',],
+            'itemHeight': 20,
+            'width': 418
+        }).AutoComplete('show');
+    })
+    function initArticle() {
+        /*渲染对应的表格样式*/
+        
+            $(".post .pjax table").addClass("green_title");
+        
+
+        /*渲染打赏样式*/
+        
+
+        /*高亮代码块行号*/
+        
+        $('pre code').each(function(){
+            var lines = $(this).text().split('\n').length - 1, widther='';
+            if (lines>99) {
+                widther = 'widther'
+            }
+            var $numbering = $('<ul/>').addClass('pre-numbering ' + widther).attr("unselectable","on");
+            $(this).addClass('has-numbering ' + widther)
+                    .parent()
+                    .append($numbering);
+            for(var i=1;i<=lines;i++){
+                $numbering.append($('<li/>').text(i));
+            }
+        });
+        
+
+        /*访问数量*/
+        
+        $.getScript("//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js");
+        
+
+        /*代码高亮，行号对齐*/
+        $('.pre-numbering').css('line-height',$('.has-numbering').css('line-height'));
+
+        
+        
+        /* 渲染*/
+        function HTMLDecode(text) {
+            var temp = document.createElement("div");
+            temp.innerHTML = text;
+            var output = temp.innerText || temp.textContent;
+            temp = null;
+            return output;
+        }
+        if (window.mermaid){
+            window.mermaid = null
+        }
+        $.getScript("//cdn.jsdelivr.net/npm/mermaid@8.4.2/dist/mermaid.min.js", function () {
+            var mermaidOptions = JSON.parse(HTMLDecode("{&#34;theme&#34;:&#34;default&#34;,&#34;startOnLoad&#34;:true,&#34;flowchart&#34;:{&#34;useMaxWidth&#34;:false,&#34;htmlLabels&#34;:true}}"))
+            if (window.mermaid) {
+                mermaid.initialize(mermaidOptions)
+                mermaid.contentLoaded()
+            }
+        })
+        
+    }
+
+    /*打赏页面隐藏与展示*/
+    
+
+</script>
+
+<!--加入行号的高亮代码块样式-->
+
+<style>
+    pre{
+        position: relative;
+        margin-bottom: 24px;
+        border-radius: 10px;
+        border: 1px solid #e2dede;
+        background: #FFF;
+        overflow: hidden;
+    }
+    code.has-numbering{
+        margin-left: 30px;
+    }
+    code.has-numbering.widther{
+        margin-left: 35px;
+    }
+    .pre-numbering{
+        margin: 0px;
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 20px;
+        padding: 0.5em 3px 0.7em 5px;
+        border-right: 1px solid #C3CCD0;
+        text-align: right;
+        color: #AAA;
+        background-color: #fafafa;
+    }
+    .pre-numbering.widther {
+        width: 35px;
+    }
+</style>
+
+<!--自定义样式设置-->
+<style>
+    
+    
+    .nav {
+        width: 542px;
+    }
+    .nav.fullscreen {
+        margin-left: -542px;
+    }
+    .nav-left {
+        width: 120px;
+    }
+    
+    
+    @media screen and (max-width: 1468px) {
+        .nav {
+            width: 492px;
+        }
+        .nav.fullscreen {
+            margin-left: -492px;
+        }
+        .nav-left {
+            width: 100px;
+        }
+    }
+    
+    
+    @media screen and (max-width: 1024px) {
+        .nav {
+            width: 492px;
+            margin-left: -492px
+        }
+        .nav.fullscreen {
+            margin-left: 0;
+        }
+        .nav .hide-list.fullscreen {
+            left: 492px
+        }
+    }
+    
+    @media screen and (max-width: 426px) {
+        .nav {
+            width: 100%;
+        }
+        .nav-left {
+            width: 100%;
+        }
+    }
+    
+    
+    .nav-right .title-list nav a .post-title, .nav-right .title-list #local-search-result a .post-title {
+        color: #383636;
+    }
+    
+    
+    .nav-right .title-list nav a .post-date, .nav-right .title-list #local-search-result a .post-date {
+        color: #5e5e5f;
+    }
+    
+    
+    .nav-right nav a.hover, #local-search-result a.hover{
+        background-color: #e2e0e0;
+    }
+    
+    
+
+    /*列表样式*/
+    
+    .post .pjax article .article-entry>ol, .post .pjax article .article-entry>ul, .post .pjax article>ol, .post .pjax article>ul{
+        border: #e2dede solid 1px;
+        border-radius: 10px;
+        padding: 10px 32px 10px 56px;
+    }
+    .post .pjax article .article-entry li>ol, .post .pjax article .article-entry li>ul,.post .pjax article li>ol, .post .pjax article li>ul{
+        padding-top: 5px;
+        padding-bottom: 5px;
+    }
+    .post .pjax article .article-entry>ol>li, .post .pjax article .article-entry>ul>li,.post .pjax article>ol>li, .post .pjax article>ul>li{
+        margin-bottom: auto;
+        margin-left: auto;
+    }
+    .post .pjax article .article-entry li>ol>li, .post .pjax article .article-entry li>ul>li,.post .pjax article li>ol>li, .post .pjax article li>ul>li{
+        margin-bottom: auto;
+        margin-left: auto;
+    }
+    
+
+    /* 背景图样式 */
+    
+    
+
+
+    /*引用块样式*/
+    
+
+    /*文章列表背景图*/
+    
+    .nav-right:before {
+        content: ' ';
+        display: block;
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        opacity: 0.2;
+        background: url("https://picsum.photos/500/1300");
+        background-repeat: no-repeat;
+        background-position: 50% 0;
+        -ms-background-size: cover;
+        -o-background-size: cover;
+        -moz-background-size: cover;
+        -webkit-background-size: cover;
+        background-size: cover;
+    }
+    
+
+    
+</style>
+
+
+
+
+
+
+<div class="mobile-menus-out" >
+
+</div>
+<div class="mobile-menus">
+    
+    
+    <a class="dynamic-menu site_url"   href="/tools">工具其它</a>
+    
+    
+    
+</div>
+
+
+</html>

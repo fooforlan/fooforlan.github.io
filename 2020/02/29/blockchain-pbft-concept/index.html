@@ -1,0 +1,712 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>区块链初探 | </title>
+  <meta name="keywords" content=" PBFT ">
+  <meta name="description" content="区块链初探 | ">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta property="og:type" content="website">
+<meta property="og:title" content="categories">
+<meta property="og:url" content="http://fooforlan.github.io/categories/index.html">
+<meta property="og:site_name" content="">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2020-02-29T06:10:39.000Z">
+<meta property="article:modified_time" content="2020-02-29T06:10:39.110Z">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="icon" href="/img/avatar.jpg">
+
+<link href="/css/style.css?v=1.0.1" rel="stylesheet">
+
+<link href="/css/hl_theme/atom-light.css?v=1.0.1" rel="stylesheet">
+
+<link href="//cdn.bootcss.com/animate.css/3.5.2/animate.min.css" rel="stylesheet">
+<link href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+
+<script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
+<script src="/js/jquery.autocomplete.min.js?v=1.0.1" ></script>
+
+<script src="//cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+<script>
+    hljs.initHighlightingOnLoad();
+</script>
+
+<script src="//cdn.bootcss.com/nprogress/0.2.0/nprogress.min.js"></script>
+
+
+
+<script src="//cdn.bootcss.com/jquery-cookie/1.4.1/jquery.cookie.min.js" ></script>
+
+<script src="/js/iconfont.js?v=1.0.1" ></script>
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+<div style="display: none">
+  <input class="theme_disqus_on" value="false">
+  <input class="theme_preload_comment" value="false">
+  <input class="theme_blog_path" value="">
+</div>
+
+<body>
+<aside class="nav">
+    <div class="nav-left">
+        <a href="/" class="avatar_target">
+    <img class="avatar" src="https://picsum.photos/100" />
+</a>
+<div class="author">
+    <span></span>
+</div>
+
+<div class="icon">
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+</div>
+
+
+
+<a class="more-menus">更多菜单</a>
+
+
+<ul>
+    <li><div class="all active">全部文章<small>(5)</small></div></li>
+    
+        
+            
+            <li><div data-rel="区块链">区块链<small>(4)</small></div>
+                
+            </li>
+            
+        
+    
+        
+            
+            <li><div data-rel="安装部署">安装部署<small>(1)</small></div>
+                
+            </li>
+            
+        
+    
+</ul>
+<div class="left-bottom">
+    <div class="menus">
+    
+    
+    <a class="dynamic-menu site_url"   href="/tools">工具其它</a>
+    
+    
+    
+    </div>
+    <div></div>
+</div>
+<input type="hidden" id="yelog_site_posts_number" value="5">
+<input type="hidden" id="yelog_site_word_count" value="19.4k">
+<div style="display: none">
+    <span id="busuanzi_value_site_uv"></span>
+    <span id="busuanzi_value_site_pv"></span>
+</div>
+
+    </div>
+    <div class="nav-right">
+        <div class="friends-area">
+    <div class="friends-title">
+        友情链接
+        <i class="back-title-list"></i>
+    </div>
+    <div class="friends-content">
+        <ul>
+            
+            <li><a target="_blank" href="http://yelog.org/">叶落阁</a></li>
+            
+        </ul>
+    </div>
+</div>
+        <div class="title-list">
+    <form onkeydown="if(event.keyCode === 13){return false;}">
+        <input id="local-search-input" class="search" type="text" placeholder="以 in: 开头进行全文搜索" />
+        <i class="cross"></i>
+        <span>
+            <label for="tagswitch">Tags:</label>
+            <input id="tagswitch" type="checkbox" style="display: none" />
+            <i id="tagsWitchIcon"></i>
+        </span>
+    </form>
+    <div class="tags-list">
+    
+    <li class="article-tag-list-item">
+        <a class="color5">PBFT</a>
+    </li>
+    
+    <li class="article-tag-list-item">
+        <a class="color5">Hexo</a>
+    </li>
+    
+    <li class="article-tag-list-item">
+        <a class="color5">RAFT</a>
+    </li>
+    
+    <li class="article-tag-list-item">
+        <a class="color1">tendermint</a>
+    </li>
+    
+    <div class="clearfix"></div>
+</div>
+
+    
+    <div id="local-search-result">
+
+    </div>
+    
+    <nav id="title-list-nav">
+        
+        <a  class="区块链 "
+           href="/2020/02/29/pbft-algorithm/"
+           data-tag="PBFT"
+           data-author="" >
+            <span class="post-title" title="PBFT实用拜占庭容错算法深入详解">PBFT实用拜占庭容错算法深入详解</span>
+            <span class="post-date" title="2020-02-29 18:31:28">2020/02/29</span>
+        </a>
+        
+        <a  class="安装部署 "
+           href="/2020/02/29/hexo-setup/"
+           data-tag="Hexo"
+           data-author="" >
+            <span class="post-title" title="Hexo Setup">Hexo Setup</span>
+            <span class="post-date" title="2020-02-29 14:10:39">2020/02/29</span>
+        </a>
+        
+        <a  class="区块链 "
+           href="/2020/02/29/blockchain-pbft-concept/"
+           data-tag="PBFT"
+           data-author="" >
+            <span class="post-title" title="区块链初探">区块链初探</span>
+            <span class="post-date" title="2020-02-29 18:17:35">2020/02/29</span>
+        </a>
+        
+        <a  class="区块链 "
+           href="/2020/02/29/raft-pbft-algorithm/"
+           data-tag="PBFT,RAFT"
+           data-author="" >
+            <span class="post-title" title="深入剖析区块链的共识算法 Raft &amp; PBFT">深入剖析区块链的共识算法 Raft &amp; PBFT</span>
+            <span class="post-date" title="2020-02-29 18:50:23">2020/02/29</span>
+        </a>
+        
+        <a  class="区块链 "
+           href="/2020/02/29/tendermint-demo-msg-bottle/"
+           data-tag="tendermint"
+           data-author="" >
+            <span class="post-title" title="基于 Tendermint 的区块链漂流瓶简单实现">基于 Tendermint 的区块链漂流瓶简单实现</span>
+            <span class="post-date" title="2020-02-29 19:06:07">2020/02/29</span>
+        </a>
+        
+    </nav>
+</div>
+    </div>
+    <div class="hide-list">
+        <div class="semicircle">
+            <div class="brackets first"><</div>
+            <div class="brackets">&gt;</div>
+        </div>
+    </div>
+</aside>
+<div class="post">
+    <div class="pjax">
+        <article id="post-blockchain-pbft-concept" class="article article-type-post" itemscope itemprop="blogPost">
+    
+        <h1 class="article-title">区块链初探</h1>
+    
+    <div class="article-meta">
+        
+        
+        
+        <span class="book">
+            
+                <a  data-rel="区块链">区块链</a>
+            
+        </span>
+        
+        
+        <span class="tag">
+            
+            <a class="color5">PBFT</a>
+            
+        </span>
+        
+    </div>
+    <div class="article-meta">
+        
+        创建时间:<time class="date" title='更新时间: 2020-02-29 18:23:32'>2020-02-29 18:17</time>
+        
+    </div>
+    <div class="article-meta">
+        
+        <span>字数:7.2k</span>
+        
+        
+        <span id="busuanzi_container_page_pv">
+            阅读:<span id="busuanzi_value_page_pv">
+                <span class="count-comment">
+                    <span class="spinner">
+                      <div class="cube1"></div>
+                      <div class="cube2"></div>
+                    </span>
+                </span>
+            </span>
+        </span>
+        
+        
+    </div>
+    
+    <div class="toc-ref">
+    
+        
+    
+<style>
+    .left-col .switch-btn,
+    .left-col .switch-area {
+        display: none;
+    }
+    .toc-level-3 i,
+    .toc-level-3 ol {
+        display: none !important;
+    }
+</style>
+</div>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <blockquote>
+<p>本文由 <a href="http://ksria.com/simpread/" target="_blank" rel="noopener">简悦 SimpRead</a> 转码， 原文地址 <a href="https://www.cnblogs.com/newton/p/7645082.html" target="_blank" rel="noopener">https://www.cnblogs.com/newton/p/7645082.html</a></p>
+</blockquote>
+<p><strong>区块链[&amp;比特币]概念</strong></p>
+<p>拜占庭问题：讨论如何在远程协商且有干扰信息的情况下整个系统达成正确决策的问题。 <a href="http://www.8btc.com/baizhantingjiangjun" target="_blank" rel="noopener">拜占庭将军问题深入探讨</a> 。一般地，把故障（不响应）的情况称为“非拜占庭错误”，恶意响应的情况称为“拜占庭错误”，对应的节点称为拜占庭节点。设总节点数N，故障节点f，PBFT场景需满足N&gt;=3f+1；所以在prepare和commit两个阶段必须收到至少2f+1(包括自己) 个节点的消息，才可认为多于<strong>故障和恶意节点</strong>的<strong>正常节点</strong>发回了响应，并有消息至少占据f+1数量的节点，从而达成共识。——注意，达成共识并不表示最终结果的正确性，而是只要得出这个最终结果即可。</p>
+<p>两军问题：信道的不可靠（信息存在被篡改和丢失的可能）使得两军问题无解。</p>
+<p><em>倘若1号蓝军（简称1）向2号蓝军（简称2）派出了通信兵，若1要知道2是否收到了自己的信息，1必须要求2给自己传输一个回执，说“你的信息我已经收到了，我同意你提议的明天早上10点9分准时进攻”。然而，就算2已经送出了这条信息，2也不能确定1就一定会在这个时间进攻，因为2发出的回执1并不一定能够收到。所以，1必须再给2发出一个回执说“我收到了”，但是1也不会知道2是否收到了这样一个回执，所以1还会期待一个2的回执。虽然看似很可笑，但在这个系统中永远需要存在一个回执，这对于两方来说都并不一定能够达成十足的确信。更要命的是，我们还没有考虑，通信兵的信息还有可能被篡改。</em></p>
+<p>这有点类似于《三体》里的猜疑链，除非我们/文明之间如三体人一样可以敞开心扉无障碍交流（可靠信道）。</p>
+<p><em>不幸的是，两军问题作为现代通信系统中必须解决的问题，我们尚不能将之完全解决，这意味着你我传输信息时仍然可能出现丢失、监听或篡改的情况。但我们能不能通过一种相对可靠的方式来解决大部分情形呢？这需要谈到TCP协议。事实上，搜索“两军问题与三次握手”，您一定可以找到大量与TCP协议相关的内容。TCP协议中，A先向B发出一个随机数x，B收到x了以后，发给A另一个随机数y以及x+1作为答复，这样A就知道B已经收到了，因为要破解随机数x可能性并不大；然后A再发回y+1给B，这样B就知道A已经收到了。这样，A和B之间就建立一个可靠的连接，彼此相信对方已经收到并确认了信息。而事实上，A并不会知道B是否收到了y+1；并且，由于信道的不可靠性，x或者y都是可能被截获的，这些问题说明了即使是三次握手，也并不能够彻底解决两军问题，只是在现实成本可控的条件下，我们把TCP协议当作了两军问题的现实可解方法。</em></p>
+<p>FLP Impossibility：可参看<a href="https://blog.csdn.net/chen77716/article/details/27963079/" target="_blank" rel="noopener">FLP Impossibility</a>，文中比较难以理解的是——F0属于D，因为D是”确定“的，E0是0-valent的，无论E0从F0可达，还是F0从E0可达，则F0必定是0-valent的——“确定”即表示后续能且只能做出一个决议，因为E0是0-valent，若E0从F0可达（即E0是F0的后续），那么F0不能演化出1-valent，也就是说F0自身不能是1-valent（若F0是1-valent，那么任意事件e应用到失效的p上，结果还是1-valent，这将反推得D是“不确定”的）；F0从E0可达同理。</p>
+<p>Diffie-Hellman算法可以使得在不安全信道上安全的交换密钥，亦是非对称加密算法的开端。</p>
+<p><em>普遍大家都认为公钥密码体制是迪菲(W.Diffie)和赫尔曼(E.Hellman)发明的，可鲜为人知的是，默克勒(R.C.Merkle)甚至在他俩之前的1975年就提出了类似的思想，尽管其文章是于1978年发表的，但投稿比较早。因此，公钥密码体制的创始人应该是他们三人。 当然，他们三人只是提出了一种关于公钥密码体制与数字签名的思想，而没有真正实现。不过，他们确实是实现了一种体现公钥密码体制思想、基于离散对数问题的、在不安全的通道上进行密钥形成与交换的新技术。</em></p>
+<p>比特币的方式每秒可以处理多少笔交易？最理想状态下，平均每笔交易225 字节。在1M区块限制下，一般平均10分钟可以打包大约 4400 笔交易。每秒大约7.3笔交易，实际交易平均大小是这个的一倍，那么容量减半，也就是每秒大约 3.6 笔交易。</p>
+<p>一笔交易的可读格式如下：</p>
+<pre><code>  {
+    &quot;version&quot;: 1,
+    &quot;locktime&quot;: 0,
+    &quot;vin&quot;: [
+      {
+        &quot;txid&quot;:&quot;7957a35fe64f80d234d76d83a2a8f1a0d8149a41d81de548f0a65a8a999f6f18&quot;,
+        &quot;vout&quot;: 0,
+        &quot;scriptSig&quot;: &quot;3045022100884d142d86652a3f47ba4746ec719bbfbd040a570b1deccbb6498c75c4ae24cb02204b9f039ff08df09cbe9f6addac960298cad530a863ea8f53982c09db8f6e3813[ALL] 0484ecc0d46f1918b30928fa0e4ed99f16a0fb4fde0735e7ade8416ab9fe423cc5412336376789d172787ec3457eee41c04f4938de5cc17b4a10fa336a8d752adf&quot;,
+       &quot;sequence&quot;: 4294967295
+     }
+  ],
+   &quot;vout&quot;: [
+     {
+       &quot;value&quot;: 0.01500000,
+       &quot;scriptPubKey&quot;: &quot;OP_DUP OP_HASH160 ab68025513c3dbd2f7b92a94e0581f5d50f654e7 _EQUALVERIFY OP_CHECKSIG&quot;
+     },
+     {
+       &quot;value&quot;: 0.08450000,
+       &quot;scriptPubKey&quot;: &quot;OP_DUP OP_HASH160 7f9b1a7fb68d60c536c2fd8aeaa53a8f3cc025a8 _EQUALVERIFY OP_CHECKSIG&quot;,
+     }
+   ]
+ }
+</code></pre><p>交易手续费：一笔交易设置了输入输出（UTXO），若输出总额小于输入总额，那么差额就作为手续费给到[打包到区块中的]矿工。因此，矿工会优选手续费大的交易；且由于区块大小一定，若一个交易有很多个输入输出（如以非常多的小额输入汇总到一个输出），即该笔交易数据size较大，矿工也许会比较该笔交易的手续费与多笔小size的交易手续费之和的大小。总之，除挖矿奖励的比特币外，矿工都会希望自己挖到的区块记录的交易有更多的手续费。若链上交易频繁，那些手续费少或者为0的交易甚至都不会被记录，从而得不到确认。</p>
+<p>_在手动创建交易时，务必注意输入、输出的值，非常容易犯错的是忘记构造找零输出。曾经有人构造交易时忘记找零，发生了支付 200 BTC 的矿工费的人间惨剧，所幸的是收录该笔交易的Block由著名挖矿团队“烤猫（Friedcat）”挖得，该团队非常厚道的退回了多余费用_。</p>
+<p>比特币的交易验证引擎依赖于两类脚本来验证比特币交易：锁定脚本（上述代码scriptPubKey）和解锁脚本（上述代码scriptSig）。锁定脚本是输出的一个字段，而解锁脚本是输入的一个字段，解锁的是上笔输出的锁定脚本。可以理解为解锁脚本作为参数传入锁定脚本，若最终得到的结果为true，那么表示该锁定脚本关联的交易输出可以作为该解锁脚本关联的交易输入，即能提供正确的解锁脚本的账号才可使用锁定脚本锁定的输出。矿工亦是据此验证一个交易是否成立。上述脚本格式为P2PKH——支付到公钥地址模式（还有P2SH，支付到脚本模式，使用多重签名就需要用到这种模式），在P2PKH模式下，scriptSig格式为_[签名的字节数]［签名］0×01 [公钥的字节数] [公钥]_，scriptPubKey格式为_OP_DUP OP_HASH160 （0×14） [一个20字节的哈希值] OP_EQUALVERIFY OP_CHECKSIG_。</p>
+<p>我们可以查看上述交易的前一笔交易的输出：</p>
+<pre><code> &quot;vout&quot;: [
+    {
+      &quot;value&quot;: 0.10000000,
+      &quot;scriptPubKey&quot;: &quot;OP_DUP OP_HASH160 7f9b1a7fb68d60c536c2fd8aeaa53a8f3cc025a8 OP_EQUALVERIFY OP_CHECKSIG&quot;
+    }
+  ]
+</code></pre><p>第4行的20字节的16进制串_7f9b1a7fb68d60c536c2fd8aeaa53a8f3cc025a8_是收款方的地址，乃是收款方公钥经过二次hash后得到的。</p>
+<p><em>为什么不直接使用公钥呢，这是出于安全考虑。我们知道，可以从私钥轻松地得到公钥，反之则非常困难。虽然通过公钥很难得到私钥，但为了将风险降到最低，在交易过程中，我们可以将公钥hash之后作为收款地址发给对方；更进一步，比特币转账每次都是彻底把原来账户中的币全部转走（除非一个账户付款给自己，如找零），因此只要我不重复使用同一个公钥，用完就扔掉，就不用担心别人拿到我的公钥后能干啥：如果高手不能很快的在我发布交易后根据里面的公钥算出私钥，一旦交易完成，公钥对应的就是一个空账户了。</em></p>
+<p>交易验证过程简单地说就是：</p>
+<ol>
+<li>把scriptSig中的公钥同样经过二次hash后得到的数据与前一笔交易的scriptPubKey的哈希值比对，若相等则说明公钥有效；</li>
+<li>使用公钥解密scriptSig中的签名，得到的结果若与当初私钥签名的内容（目前比特币采用的是当前交易的全部or部分数据，取决于SIGHASH标志字节，scriptSig中指定）相同，则交易有效[，不考虑其它非法情况比如交易输出&gt;输入]（矿工便可将该交易打包）。</li>
+</ol>
+<p>一般钱包会使用SIGHASH_ALL标志（0x01）进行签名，表示Signature applies to all inputs and outputs。指定不同的SIGHASH标志可以实现特殊的业务场景，比如ALL|ANYONECANPAY（0x81，Signature applies to one input and all outputs）可以实现某种众筹形式：试图筹集资金的人可以用单笔输出来构建一个交易，单笔输出将“目标”金额付给众筹发起人。这样的交易显然是无效的，因为它没有输入。但是现在其他人可以通过添加自己的输入作为捐赠来修改它，他们用ALL | ANYONECANPAY签署自己的输入，除非收集到足够的输入以达到输出的价值，否则交易[数据]无效，可以把每次捐赠看作是一项“抵押”，直到募集到整个目标金额募款人才能真正收取（即将交易数据发送到比特币网络，满足输入&gt;=输出才能被矿工打包记录）。</p>
+<p>在签名过程中，会先 generates an <em>ephemeral</em> (temporary) private public key pair。为何要另外生成一对临时密钥对，而不使用已有的公私钥，现在我还没理解进去。</p>
+<p>私钥就是一个随机选出的数字。比特币私钥空间的大小是2^256，这是一个非常大的数字。用十进制表示的话，大约是10^77，而可见宇宙被估计只含有10^80个原子。</p>
+<p>通过椭圆曲线乘法可以从私钥计算得到公钥，这是不可逆转的过程：K = k * G 。其中k是私钥，G是被称为生成点的常数点，而K是所得公钥。比特币使用了secp256k1标准所定义的一种特殊的椭圆曲线和一系列数学常数，所有比特币用户的生成点是相同的。</p>
+<p>公钥的格式：按是否压缩可分为非压缩格式和压缩格式。我们知道，公钥是在椭圆曲线上的一个点，由一对坐标（x，y）组成。非压缩公钥通常表示为前缀04紧接着两个256比特的数字，组成格式为04 x y共520bit。引入压缩格式公钥是为了减少比特币交易的字节数，从而可以节省那些运行区块链数据库的节点磁盘空间——压缩格式只存储公钥的x坐标值，y坐标可以通过解椭圆曲线的方程求得，前缀02/03分别对应y是偶数/奇数的情况。</p>
+<p>为了存储安全，私钥有必要再次加密。BIP0038提出了一个通用标准，使用一个[强]口令加密私钥并使用Base58Check对加密的私钥进行编码。这样就算别人获得了你的私钥（加密过的），但不知道口令[密码]依然无用。</p>
+<p><strong>P2P网络</strong></p>
+<p>当一个节点（如比特币钱包客户端）启动后，如何加入到比特币网络中呢，即怎样才能与已在比特币网络中的节点建立连接。一种方式是通过已知的DNS服务器，这些DNS服务器提供比特币节点的IP地址列表；或者指定至少一个已知的比特币节点的IP地址。目前你还不能期望一个孤独的节点连入Internet后自己能很快寻找到其它的比特币节点。</p>
+<p><strong>SPV指的是“支付验证“，而不是“交易验证”。</strong>这两种验证有很大区别。<br>“交易验证”非常复杂，涉及到验证是否有足够余额可供支出、是否存在双花、脚本能否通过等等，通常由运行完全节点的矿工来完成。<br>“支付验证”则比较简单，只判断用于“支付”的那笔交易是否已经被验证过（已经被矿工打包），并得到了多少的算力保护（多少确认数）。这里涉及到Merkle Tree的概念，将数据块分段hash，然后相邻两段[或多段]的hash拼接后再hash，最终得到一个根hash，这样就组成了一棵Merkle Tree。我们可以依靠它校验局部数据，而不需要对整个数据块进行校验，参看<a href="https://www.jianshu.com/p/2b082157b3b0" target="_blank" rel="noopener"> 大话Neo系列:Merkle Tree</a>。 </p>
+<p><strong>哈希算法</strong>在比特币中的应用几乎是方方面面，主要包括SHA256和RIPEMD160，比特币将这两个哈希算法的应用组合成两个函数：hash256(d)=sha256(sha256(d))和hash160(d)=ripemd160(sha256(d))，其中d为待哈希的字节数组，两者分别生成256位（32字节）和160位（20字节）的16进制数值。hash256主要用于生成标志符，如区块ID，交易ID等，而hash160主要用于生成比特币地址。<br>值得一提的是，为什么两个函数都是做两次哈希呢？对于hash160比较认同的答案是ripemd160可以使得生成的地址更短，但是只做ripemd160一次哈希可能会存在安全漏洞所以同时使用sha256起到安全加固；至于hash256使用两次sha256哈希算法的原因来源于sha1算法，由于一次sha1哈希存在被生日攻击（birthday attack）的风险，所以当使用sha1运算时一种有效方式就是做两次sha1哈希，sha256本身并不存在生日攻击漏洞，但是防御性的使用两次sha256哈希借鉴于sha1.</p>
+<p>参考资料：<a href="http://book.8btc.com/books/6/masterbitcoin2cn/_book/ch04.html" target="_blank" rel="noopener">精通比特币（第二版）</a> 英文原版：<a href="https://github.com/bitcoinbook/bitcoinbook" target="_blank" rel="noopener">https://github.com/bitcoinbook/bitcoinbook  
+</a></p>
+<hr>
+<p><strong>涉及到的部分数学知识</strong></p>
+<p>a≡b(modc)a≡b(modc)a\equiv b\pmod{c}：a和b除以c后余数相同。</p>
+<p>线性同余方程：ax≡b(modn)ax≡b(modn)ax\equiv b\pmod{n}，当且仅当b能够被a与n的最大公约数整除（记作gcd(a,n) | b）时，此方程有解。这时，如果 x0 是方程的一个解，那么所有的解可以表示为：{x0+kn/d|(k∈z)}，其中 d 是a 与 n 的最大公约数。在模 n 的完全剩余系 {0,1,…,n-1} 中，恰有 d 个解。例如，在方程5x ≡ 2 (mod 6)中， d = gcd(5,6) = 1，1 整除 2，因此方程在{0,1,2,3,4,5} 中恰有一个解: x=4。</p>
+<p>对于[一元]线性同余方程组，中国剩余定理给出了有解的判定条件，并用构造法给出了在有解情况下解的具体形式。</p>
+<p>原根：如果 a 与 n 是互质的整数且n&gt;0，那么当ordna=φ(n)ordna=φ(n)ord_na=\varphi(n)时，称a为模n的原根。若a是n的原根，那么aimodn,其中(i∈[1,n−1],a∈[2,n−1])aimodn,其中(i∈[1,n−1],a∈[2,n−1])a^i \bmod n,其中(i\in[1,n-1],a\in[2,n-1])的<strong>结果互不相同</strong>。也可从另个方面理解，P为素数，i、j为整数，其中i≠j,且i,j∈[1,P−1]i≠j,且i,j∈[1,P−1]i \ne j, 且 i,j \in [1,P-1]，若对于满足上述条件的任意i、j，有gimodP≠gjmodPgimodP≠gjmodPg^i \bmod P \ne g^j \bmod P，则 g 就是 P 的原根。</p>
+<p>更多阶与原根的知识可参看 <a href="https://blog.csdn.net/fuyukai/article/details/50894609" target="_blank" rel="noopener">数论之原根</a>。</p>
+<p>Diffie-Hellman算法：一种秘钥交换算法，它是一种建立秘钥的方法，而不是加密方法，这种秘钥交换技术的目的在于使两个用户安全的交换一个秘钥。按上述原根的性质，可知如果a是素数p的一个原根，那么数值amodp,a2modp,⋯,ap−1modpamodp,a2modp,⋯,ap−1modpa \bmod p,a^2 \bmod p,\cdots,a^{p-1} \bmod p 是各不相同的整数，并且以某种排列方式组成了从1到p-1的所有整数。可参看 <a href="https://blog.csdn.net/lee244868149/article/details/51790397" target="_blank" rel="noopener">Diffie-Hellman（迪菲-赫尔曼）秘钥交换</a>。</p>
+<p><em>涉及引理：若amodb≡namodb≡na \bmod b \equiv n，则akmodb≡nkmodbakmodb≡nkmodba^k \bmod b \equiv n^k \bmod b。</em></p>
+<p><em>证明：</em></p>
+<p><em>因为amodb≡namodb≡na \bmod b \equiv n，则必然存在唯一整数q使得 a=qb+n （带余除法基本原理）</em></p>
+<p><em>于是ak=(qb+n)kak=(qb+n)ka^k=(qb+n)^k，将(qb+n)k(qb+n)k(qb+n)^k二项式展开，可以发现展开项除nknkn^k外，其余项b的次数都大于零，可得除以b的余数必然由nknkn^k这一项产生</em></p>
+<p><em>所以akmodb≡nkmodbakmodb≡nkmodba^k \bmod b \equiv n^k \bmod b，证毕</em></p>
+<p>RSA加密算法：参看 <a href="http://www.ruanyifeng.com/blog/2013/06/rsa_algorithm_part_one.html" target="_blank" rel="noopener">阮一峰：RSA算法原理（一）</a>、<a href="http://www.ruanyifeng.com/blog/2013/07/rsa_algorithm_part_two.html" target="_blank" rel="noopener">RSA算法原理（二）</a></p>
+<hr>
+<p><strong>其它</strong></p>
+<p>复式记账法：Asset（资产） = Liability（负债） + Equity（股东权益）。等式左边可理解为[公司]债务，右边可理解为[股东和其他投资方的]债权，可以理解为公司本身是没钱的，公司赚的钱都是属于股东的。</p>
+<p>个人理解，一个好处是便于数据的统计汇总，它将一笔经济业务格式化为借&amp;贷。借表示资金目前的状态，贷表示资金的来源。整个借贷分录，描述出一笔经济业务的资金运行情况，包括了业务种类（即会计科目）、涉及金额和资金运行方向，也就是用会计的语言描述了一笔经济业务。这比纯语言记录如“老李借给我100块钱”更规范，也便于工具[&amp;自己]汇总对账。</p>
+<p><em>另一个角度理解复式记账法，可以建立一个“主体观”，要明白记账的“主体”是什么？记账的主体是“公司”，不是股东，也不是债权人（这就是公司的法人独立性）。所以资源流入的时候，公司资产增加。但是“公司” 是属于股东的，公司有一部分资产也是属于债权人的，所以每一笔资源流入，必然对应股东权益增加，或者债权人债权增加（不考虑资产内部互转等情况）；流出亦然。也就是说，公司每一笔业务导致的资源（财、物）流动，复式记账法不仅给“主体”做了登记，还给资源的归属做了登记。为什么要这么复杂？因为公司法人独立，公司资产与股东财产分离，才能做到公司债务与股东责任分离。公司可以破产，因为经营的主体是“公司”而非股东个人，所以股东不必“卖房卖车卖儿卖女”的去还债；所以股东虽然是公司所有者，但是非法挪用公司财产照样是犯罪。这个“主体观”，不仅可以帮助理解复式记账法，还是以后学习更复杂的企业合并、报表合并、股权投资核算的有力工具。[<a href="https://www.zhihu.com/question/20718557/answer/74622257" target="_blank" rel="noopener">来自知乎</a>，相关问题：<a href="https://www.zhihu.com/question/20718557" target="_blank" rel="noopener">复式记账（复式簿记）的基本原理是什么？</a>]</em></p>
+<p>通货膨胀导致货币缓慢但不可避免的贬值，这是一种隐性税收的形式，惩罚在银行存钱的人从而实现解救债务人（包括政府这个最大的债务人）。 政府控制下的货币容易遭受债务发行的道德风险，之后可能会以牺牲储蓄者为代价，通过贬值来抹去债务。</p>
+<p>以太坊全节点中，都保存有完整的区块链数据。以太坊不仅将交易数据保存在链上，编译后 的合约代码同样也保存在链上，同时其还提供了一个虚拟机来执行合约代码。感性认识：<a href="https://bitshuo.com/topic/587e03c44dea36e72c1b381b" target="_blank" rel="noopener">深入解析调用合约的三种方法</a>、<a href="https://cloud.tencent.com/developer/news/237541" target="_blank" rel="noopener">序列8 智能合约能自动触发吗？-智能合约平台的本质</a></p>
+<p>一般情况下，DApp还是需要中心服务器，用于同区块链/以太坊节点交互，非用户数据存储在本地，用户数据保存在链上。若有成千上万个DApp运行在主链上，将在计算和存储两方面对主链产生压力，可使用侧链架构，即每一个Dapp就是一条侧链，侧链可以有相对独立的区块链和节点网络，不同DApp之间互不影响，更合理。</p>
+<p>寄存器是中央处理器内的组成部份。它们可用来暂存指令、数据和位址。在中央处理器的控制部件中，包含的寄存器有指令寄存器(IR)和程序计数器(PC)。在中央处理器的算术及逻辑部件中，包含的寄存器有累加器(ACC)。</p>
+<p>堆栈：堆和栈是两种内存分配的两个统称，可能有很多种不同的实现方式。每种语言针对其有基本的设计原则，如栈通常后进先出（LIFO）。堆都是动态分配的，没有静态分配的堆。栈有两种分配方式：静态分配和动态分配。静态分配是编译器完成的，比如局部变量的分配；栈的动态分配和堆是不同的，他的动态分配是由编译器进行释放，无需我们手工实现。栈是机器系统提供的数据结构，计算机会在底层对栈提供支持，分配专门的寄存器存放栈的地址，压栈出栈都有专门的指令执行，这就决定了栈的效率比较高。栈通常用于存取函数参数值、局部变量值以及指令地址等，主要保证逻辑按预期顺序执行；而堆简单的多，只是用于数据的存取。理解堆栈的概念还是得从早期的硬件和语言历史回顾，随着计算机技术的发展，这两者在软硬件的层面，在不同场景下都有不同的体现。<a href="http://blog.csdn.net/luyuncsd123/article/details/9079147" target="_blank" rel="noopener">C/C++中的变量存储类别以及内存分配 </a></p>
+<p>指令系统分成堆栈型和寄存器型。不光这两种，指令系统共有四种分类，堆栈型，累加器型，寄存器-存储器型和寄存器-寄存器型。分类的依据是操作数的来源。堆栈型默认的操作数都在栈顶，累加器型默认一个操作数是累加器，寄存器-存储器型的操作数可以是寄存器或者内存，寄存器-寄存器型除了访存指令，操作数都是寄存器。</p>
+<p>进程，线程，协程：进程和线程大家很熟悉。进程拥有自己独立的堆和栈，既不共享堆，亦不共享栈，进程由操作系统调度；线程拥有自己独立的栈，共享堆，不共享栈，线程亦由操作系统调度；协程主要是针对单线程的一个概念（如Js、NodeJs、Python由于GIL导致的伪多线程），常用的一个场景是IO阻塞时，程序控制线程不傻傻等待，而是去执行其它任务，等IO操作完毕再控制线程回来继续操作，由于是单线程，所以也不涉及到由于系统调度导致的性能损耗。在编程层面上来说，协程的概念偏向于已同步编程的模式实现异步处理的编程模式，避免了多层回调代码嵌套的问题。协程的模式容易让人联想到C#的await/async，其实两者虽然解决的问题差不多，但是C#是多线程，若回调到达时，之前的线程仍在忙其它事情，线程池完全可以派另外的线程处理后续步骤，虽然多了线程上下文（主要是栈数据，刷新寄存器）切换的开销，但不用死等之前线程。参考资料 <a href="https://zhuanlan.zhihu.com/p/31410589" target="_blank" rel="noopener">事件驱动与协程：基本概念介绍</a> （虽然其中内容不太准确，但是意思到位了）。</p>
+<p>多个协程对应到一个线程才有意义，就如同一个进程包含多个线程。一个cpu内核同一时间只能执行一个进程/线程，因此在一个内核上的多线程执行其实效率反而比串行执行低，只是给用户一种并发的错觉；协程也同理，虽然貌似多个协程并行执行，其实最终还是落到一个线程上，不过比掩耳盗铃的多线程切换要省时省力（无需切换线程，省去了内核调度），并发的感觉上似乎也更加快了。当然多个协程可以对应到多个线程，特别是在当前多核cpu场景下，一般协程数多于线程数才有使用协程的意义。Go语言中的Goroutine可看作协程的一种实现，参看：<a href="http://blog.51cto.com/nxlhero/1835887" target="_blank" rel="noopener">理解Goroutine</a></p>
+<p>指针：</p>
+<pre><code>void Add(int * a)   // a 是一个int型的指针,a指的地址存放的是int型的数据
+{
+  a    // 取指针a的值(即其指向内容的地址)
+  *a   // 取指针a指向的内容
+  &amp;a   // 取存放指针a的值的地址
+}
+</code></pre><p>为什么会有指针。从广义上讲，在编码时，我们也可以认为普通变量是指向具体内存的指针，但是代码编译后变量名会被替换为[虚拟]内存地址或者各种寄存器，所以变量只是给程序员编程时操作数据用的，但是有时我们需要操作的是数据所在的内存地址，这个时候普通的变量就没办法了，于是有了我们平常所说的指针的概念。</p>
+<p>C++还有引用的概念，可以理解为一个变量的别名，指向同一块内存（即使用引用不会创建对象副本），主要用在方法参数和返回值。不同于C#，C#一开始就在底层区分了值类型和引用类型，而C++传递变量名默认就是值传递（不管是什么数据类型）。很多人对指针和引用傻傻分不清，虽然指针也可以实现引用的功能（毕竟指针直接操作内存地址，你说啥功能实现不了），但是引用更符合它所代表的使用场景。</p>
+<p>vector：C++中的一种数据结构，一般作为动态size的数组使用。vector的扩充机制：按照容器现在容量的一倍进行增长。 vector容器分配的是一块连续的内存空间，每次容器的增长，并不是在原有连续的内存空间后再进行简单的叠加， 而是重新申请一块更大的新内存，并把现有容器中的元素逐个复制过去，然后销毁旧的内存。 这时原有指向旧内存空间的迭代器已经失效，所以当操作容器时，迭代器要及时更新。</p>
+<p> 其它资料： <a href="https://thecodeway.com/blog/?p=964" target="_blank" rel="noopener">一个简单的DH密钥协商算法的实现</a></p>
+
+      
+       <hr><span style="font-style: italic;color: gray;"> 转载请注明来源，欢迎对文章中的引用来源进行考证，欢迎指出任何有错误或不够清晰的表达。可以在下面评论区评论。 </span>
+    </div>
+</article>
+
+
+
+<div class="article_copyright">
+    <p><span class="copy-title">文章标题:</span>区块链初探</p>
+    <p><span class="copy-title">文章字数:</span><span class="post-count">7.2k</span></p>
+    <p><span class="copy-title">本文作者:</span><a  title=""></a></p>
+    <p><span class="copy-title">发布时间:</span>2020-02-29, 18:17:35</p>
+    <p><span class="copy-title">最后更新:</span>2020-02-29, 18:23:32</p>
+    <span class="copy-title">原始链接:</span><a class="post-url" href="/2020/02/29/blockchain-pbft-concept/" title="区块链初探">http://fooforlan.github.io/2020/02/29/blockchain-pbft-concept/</a>
+    <p>
+        <span class="copy-title">版权声明:</span><i class="fa fa-creative-commons"></i> <a rel="license noopener" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" title="CC BY-NC-SA 4.0 International" target = "_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
+    </p>
+</div>
+
+
+
+
+
+    
+
+
+
+
+    </div>
+    <div class="copyright">
+        <p class="footer-entry">©2019-0000</p>
+<p class="footer-entry">Built with <a href="https://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/yelog/hexo-theme-3-hexo" target="_blank">3-hexo</a> theme</p>
+
+    </div>
+    <div class="full-toc">
+        <button class="full"><span class="min "></span></button>
+<button class="post-toc-menu"><span class="post-toc-menu-icons"></span></button>
+<div class="post-toc"><span class="post-toc-title">目录</span>
+    <div class="post-toc-content">
+
+    </div>
+</div>
+<a class="" id="rocket" ></a>
+
+    </div>
+</div>
+<div class="acParent"></div>
+
+</body>
+<script src="/js/jquery.pjax.js?v=1.0.1" ></script>
+
+<script src="/js/script.js?v=1.0.1" ></script>
+<script>
+    var img_resize = 'default';
+    /*作者、标签的自动补全*/
+    $(function () {
+        $('.search').AutoComplete({
+            'data': ['#PBFT','#Hexo','#RAFT','#tendermint',],
+            'itemHeight': 20,
+            'width': 418
+        }).AutoComplete('show');
+    })
+    function initArticle() {
+        /*渲染对应的表格样式*/
+        
+            $(".post .pjax table").addClass("green_title");
+        
+
+        /*渲染打赏样式*/
+        
+
+        /*高亮代码块行号*/
+        
+        $('pre code').each(function(){
+            var lines = $(this).text().split('\n').length - 1, widther='';
+            if (lines>99) {
+                widther = 'widther'
+            }
+            var $numbering = $('<ul/>').addClass('pre-numbering ' + widther).attr("unselectable","on");
+            $(this).addClass('has-numbering ' + widther)
+                    .parent()
+                    .append($numbering);
+            for(var i=1;i<=lines;i++){
+                $numbering.append($('<li/>').text(i));
+            }
+        });
+        
+
+        /*访问数量*/
+        
+        $.getScript("//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js");
+        
+
+        /*代码高亮，行号对齐*/
+        $('.pre-numbering').css('line-height',$('.has-numbering').css('line-height'));
+
+        
+        
+        /* 渲染*/
+        function HTMLDecode(text) {
+            var temp = document.createElement("div");
+            temp.innerHTML = text;
+            var output = temp.innerText || temp.textContent;
+            temp = null;
+            return output;
+        }
+        if (window.mermaid){
+            window.mermaid = null
+        }
+        $.getScript("//cdn.jsdelivr.net/npm/mermaid@8.4.2/dist/mermaid.min.js", function () {
+            var mermaidOptions = JSON.parse(HTMLDecode("{&#34;theme&#34;:&#34;default&#34;,&#34;startOnLoad&#34;:true,&#34;flowchart&#34;:{&#34;useMaxWidth&#34;:false,&#34;htmlLabels&#34;:true}}"))
+            if (window.mermaid) {
+                mermaid.initialize(mermaidOptions)
+                mermaid.contentLoaded()
+            }
+        })
+        
+    }
+
+    /*打赏页面隐藏与展示*/
+    
+
+</script>
+
+<!--加入行号的高亮代码块样式-->
+
+<style>
+    pre{
+        position: relative;
+        margin-bottom: 24px;
+        border-radius: 10px;
+        border: 1px solid #e2dede;
+        background: #FFF;
+        overflow: hidden;
+    }
+    code.has-numbering{
+        margin-left: 30px;
+    }
+    code.has-numbering.widther{
+        margin-left: 35px;
+    }
+    .pre-numbering{
+        margin: 0px;
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 20px;
+        padding: 0.5em 3px 0.7em 5px;
+        border-right: 1px solid #C3CCD0;
+        text-align: right;
+        color: #AAA;
+        background-color: #fafafa;
+    }
+    .pre-numbering.widther {
+        width: 35px;
+    }
+</style>
+
+<!--自定义样式设置-->
+<style>
+    
+    
+    .nav {
+        width: 542px;
+    }
+    .nav.fullscreen {
+        margin-left: -542px;
+    }
+    .nav-left {
+        width: 120px;
+    }
+    
+    
+    @media screen and (max-width: 1468px) {
+        .nav {
+            width: 492px;
+        }
+        .nav.fullscreen {
+            margin-left: -492px;
+        }
+        .nav-left {
+            width: 100px;
+        }
+    }
+    
+    
+    @media screen and (max-width: 1024px) {
+        .nav {
+            width: 492px;
+            margin-left: -492px
+        }
+        .nav.fullscreen {
+            margin-left: 0;
+        }
+        .nav .hide-list.fullscreen {
+            left: 492px
+        }
+    }
+    
+    @media screen and (max-width: 426px) {
+        .nav {
+            width: 100%;
+        }
+        .nav-left {
+            width: 100%;
+        }
+    }
+    
+    
+    .nav-right .title-list nav a .post-title, .nav-right .title-list #local-search-result a .post-title {
+        color: #383636;
+    }
+    
+    
+    .nav-right .title-list nav a .post-date, .nav-right .title-list #local-search-result a .post-date {
+        color: #5e5e5f;
+    }
+    
+    
+    .nav-right nav a.hover, #local-search-result a.hover{
+        background-color: #e2e0e0;
+    }
+    
+    
+
+    /*列表样式*/
+    
+    .post .pjax article .article-entry>ol, .post .pjax article .article-entry>ul, .post .pjax article>ol, .post .pjax article>ul{
+        border: #e2dede solid 1px;
+        border-radius: 10px;
+        padding: 10px 32px 10px 56px;
+    }
+    .post .pjax article .article-entry li>ol, .post .pjax article .article-entry li>ul,.post .pjax article li>ol, .post .pjax article li>ul{
+        padding-top: 5px;
+        padding-bottom: 5px;
+    }
+    .post .pjax article .article-entry>ol>li, .post .pjax article .article-entry>ul>li,.post .pjax article>ol>li, .post .pjax article>ul>li{
+        margin-bottom: auto;
+        margin-left: auto;
+    }
+    .post .pjax article .article-entry li>ol>li, .post .pjax article .article-entry li>ul>li,.post .pjax article li>ol>li, .post .pjax article li>ul>li{
+        margin-bottom: auto;
+        margin-left: auto;
+    }
+    
+
+    /* 背景图样式 */
+    
+    
+
+
+    /*引用块样式*/
+    
+
+    /*文章列表背景图*/
+    
+    .nav-right:before {
+        content: ' ';
+        display: block;
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        opacity: 0.2;
+        background: url("https://picsum.photos/500/1300");
+        background-repeat: no-repeat;
+        background-position: 50% 0;
+        -ms-background-size: cover;
+        -o-background-size: cover;
+        -moz-background-size: cover;
+        -webkit-background-size: cover;
+        background-size: cover;
+    }
+    
+
+    
+</style>
+
+
+
+
+
+
+<div class="mobile-menus-out" >
+
+</div>
+<div class="mobile-menus">
+    
+    
+    <a class="dynamic-menu site_url"   href="/tools">工具其它</a>
+    
+    
+    
+</div>
+
+
+</html>

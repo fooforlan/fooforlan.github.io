@@ -2,9 +2,9 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>categories | </title>
-  <meta name="keywords" content="">
-  <meta name="description" content="categories | ">
+  <title>PBFT实用拜占庭容错算法深入详解 | </title>
+  <meta name="keywords" content=" PBFT ">
+  <meta name="description" content="PBFT实用拜占庭容错算法深入详解 | ">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <meta property="og:type" content="website">
 <meta property="og:title" content="categories">
@@ -244,24 +244,36 @@
 </aside>
 <div class="post">
     <div class="pjax">
-        <article id="page-" class="article article-type-page" itemscope itemprop="blogPost">
+        <article id="post-pbft-algorithm" class="article article-type-post" itemscope itemprop="blogPost">
     
-        <h1 class="article-title">categories</h1>
+        <h1 class="article-title">PBFT实用拜占庭容错算法深入详解</h1>
     
     <div class="article-meta">
         
         
         
+        <span class="book">
+            
+                <a  data-rel="区块链">区块链</a>
+            
+        </span>
+        
+        
+        <span class="tag">
+            
+            <a class="color5">PBFT</a>
+            
+        </span>
         
     </div>
     <div class="article-meta">
         
-        创建时间:<time class="date" title='更新时间: 2020-02-29 14:10:39'>2020-02-29 14:10</time>
+        创建时间:<time class="date" title='更新时间: 2020-02-29 18:46:25'>2020-02-29 18:31</time>
         
     </div>
     <div class="article-meta">
         
-        <span>字数:0</span>
+        <span>字数:1.5k</span>
         
         
         <span id="busuanzi_container_page_pv">
@@ -280,7 +292,7 @@
     
     <div class="toc-ref">
     
-        
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#基本概念"><span class="toc-text">基本概念</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#三阶段协议"><span class="toc-text">三阶段协议</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#PBFT-状态机"><span class="toc-text">PBFT 状态机</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#数据结构"><span class="toc-text">数据结构</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#State"><span class="toc-text">State</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Three-Phase-Protocol"><span class="toc-text">Three Phase Protocol</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#VIEW-CHANGE"><span class="toc-text">VIEW-CHANGE</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#NEW-VIEW"><span class="toc-text">NEW-VIEW</span></a></li></ol></li></ol>
     
 <style>
     .left-col .switch-btn,
@@ -296,13 +308,112 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        
+        <blockquote>
+<p>本文由 <a href="http://ksria.com/simpread/" target="_blank" rel="noopener">简悦 SimpRead</a> 转码， 原文地址 <a href="https://blog.csdn.net/TurkeyCock/article/details/81672759?utm_source=tuicool&amp;utm_medium=referral" target="_blank" rel="noopener">https://blog.csdn.net/TurkeyCock/article/details/81672759?utm_source=tuicool&amp;utm_medium=referral</a></p>
+</blockquote>
+<p>PBFT 即实用拜占庭容错算法，由 Miguel Castro 和 Barbara Liskov 在 1999 年提出，可以在作恶节点少于三分之一的情况下，保证系统的正确性（避免分叉）。与原始的 BFT 算法相比，算法复杂度从指数级降低到了多项式级，从而使得 BFT 算法的实际应用成为可能。实际上，Tenermint 就是 PBFT 的一个简化版本的实现。</p>
+<h1 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a>基本概念</h1><p>首先了解一下几个基本概念：（从区块链的视角）</p>
+<ul>
+<li>replica：即区块链节点，提供 “副本复制” 服务</li>
+<li>client：向 primary 发起请求的客户端节点，在区块链中往往跟 primary 合二为一</li>
+<li>primary：区块发起者，在收到请求后生成新区块并广播</li>
+<li>backup：区块验证者，在收到区块后进行验证，然后广播验证结果进行共识</li>
+<li>view：一个 primary 和多个 backup 形成一个 view，在该 view 上对某个区块进行共识</li>
+<li>sequence number(n)：由 primary 指定的一个数字，可以理解为区块高度</li>
+<li>checkpoint：如果某个 sequence number 对应的区块收到了超过 2/3 的确认，则称为一个 checkpoint</li>
+</ul>
+<p>另外，primary 是所有节点轮流做的，每个 view 上都会选出一个新的 primary。</p>
+<h1 id="三阶段协议"><a href="#三阶段协议" class="headerlink" title="三阶段协议"></a>三阶段协议</h1><p>三阶段协议是 PBFT 的核心，参见下图：<br><img src="/2020/02/29/pbft-algorithm/20180814171323387.jfif" alt></p>
+<p>从发起请求到最终收到 reply，中间的共识过程需要经过 3 个阶段：</p>
+<ul>
+<li>pre-prepare：primary 收到请求，生成新区块并广播</li>
+<li>prepare：所有 replica 收到区块后，广播区块验证结果，同时等待接收超过 2/3 的节点的广播</li>
+<li>commit：收到 2/3 的节点广播或者超时后，再次发送广播，同时再次等待接收超过 2/3 的节点的广播</li>
+</ul>
+<p>这里的逻辑有点绕：<br>第一次等待超过 2/3 的节点广播，是为了确认 “已经有超过 2/3 的节点收到区块了”。但是这只是你自己知道，别人并不知道啊，因此需要再发送一次广播，告诉别的节点 “我已经确认有超过 2/3 的节点收到区块啦”。而第二次等待超过 2/3 的节点广播，则是为了确认 “已经有超过 2/3 的节点确认 (有超过 2/3 的节点收到区块啦)”，此时说明已经达成共识，可以把该区块写到链上了。</p>
+<h1 id="PBFT-状态机"><a href="#PBFT-状态机" class="headerlink" title="PBFT 状态机"></a>PBFT 状态机</h1><p>这个原文是没有图的，只能根据文字描述自行理解，还是挺复杂的：</p>
+<p><img src="/2020/02/29/pbft-algorithm/20180814171405725.png" alt></p>
+<p>图中的圆角矩形表示状态，六边形表示等待阶段，绿线代表正常流程，红线代表异常流程。下面一个一个的来介绍：</p>
+<ul>
+<li>wait request<ul>
+<li>即等待请求状态，所有节点初始均处于该状态</li>
+<li>primary 收到 REQUEST 消息后，会转换到 pre-prepare 状态</li>
+<li>backup 收到区块后，会转换到 prepare 状态</li>
+</ul>
+</li>
+<li>pre-prepare<ul>
+<li>这个状态是 primary 专属的，primary 生成区块并广播 PRE-PREPARE 消息后，转换到 prepare 状态</li>
+</ul>
+</li>
+<li>prepare<ul>
+<li>进入该状态后，广播 PREPARE 消息，并等待 2f+1 个节点确认</li>
+</ul>
+</li>
+<li>wait for 2f+1 prepare<ul>
+<li>如果等到了 2f+1 个节点确认（accept 或 reject），转换到 commit 状态</li>
+<li>如果超时，转换到 view change 状态</li>
+</ul>
+</li>
+<li>commit<ul>
+<li>进入该状态后，广播 COMMIT 消息，并等待 2f+1 个节点确认</li>
+</ul>
+</li>
+<li>wait for 2f+1 commit<ul>
+<li>如果等到了 2f+1 个节点确认（accept 或 reject），发送 REPLY 消息，转换回 wait request 状态</li>
+<li>如果超时，转换到 view change 状态</li>
+</ul>
+</li>
+<li>view change<ul>
+<li>进入该状态后，广播 v+1 的 VIEW-CHNAGE 消息，等待接收 2f 个节点的 VIEW-CHANGE 消息</li>
+</ul>
+</li>
+<li>wait for 2f view change<ul>
+<li>这个状态比较复杂，可以分为以下 4 种情形：<ul>
+<li>收到了 2f 个节点的 VIEW-CHANGE 消息，并且是新的 primary，广播 NEW-VIEW 消息，并转换到 pre-prepare 状态</li>
+<li>收到了 2f 个节点的 VIEW-CHANGE 消息，并且是 backup，转换到 wait request 状态</li>
+<li>接收超时，重新回到 view change 状态，广播 v+2 的 VIEW-CHANGE 消息</li>
+<li>在收到 2f 个节点的 VIEW-CHANGE 消息之前，收到了 NEW-VIEW 消息，则转换到 prepare 状态</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>需要注意的是，如果接收到了 NEW-VIEW 消息，则表示当前 view 未达成共识，需要在更高层的 view 上完成共识。因此，不管当前处于哪个阶段，都需要重新回到 prepare 状态。</p>
+<h1 id="数据结构"><a href="#数据结构" class="headerlink" title="数据结构"></a>数据结构</h1><p>接下来就是介绍一下相关的数据结构了，主要是状态和消息。</p>
+<h2 id="State"><a href="#State" class="headerlink" title="State"></a>State</h2><p><img src="/2020/02/29/pbft-algorithm/20180814171626304.png" alt></p>
+<p>节点的状态主要包含三部分：</p>
+<ul>
+<li>世界状态（即最新区块信息）</li>
+<li>消息日志</li>
+<li>当前 view</li>
+</ul>
+<h2 id="Three-Phase-Protocol"><a href="#Three-Phase-Protocol" class="headerlink" title="Three Phase Protocol"></a>Three Phase Protocol</h2><p><img src="/2020/02/29/pbft-algorithm/20180814171638282.png" alt></p>
+<p>这里列出了三阶段协议相关的消息结构，其中 PRE-PREPARE 消息包含新生成的区块，其他消息则主要包含一些 id、sequence number、区块内容摘要和签名等信息。</p>
+<h2 id="VIEW-CHANGE"><a href="#VIEW-CHANGE" class="headerlink" title="VIEW-CHANGE"></a>VIEW-CHANGE</h2><p><img src="/2020/02/29/pbft-algorithm/20180814171712980.png" alt></p>
+<p>VIEW-CHANGE 消息包含的内容比较多：<br>首先需要基于一个稳定的 checkpoint，因此需要包含 2f+1 个 CHECKPOINT 消息以证明该 checkpoint 是有效的。<br>然后，在该 checkpoint 之上的所有 sequence number，都需要打包对应的 PRE-PREPARE 消息以及 2f 个 PREPARE 消息。</p>
+<h2 id="NEW-VIEW"><a href="#NEW-VIEW" class="headerlink" title="NEW-VIEW"></a>NEW-VIEW</h2><p><img src="/2020/02/29/pbft-algorithm/20180814171729918.png" alt></p>
+<p>NEW-VIEW 消息首先需要包含 2f+1 个 VIEW-CHANGE 消息，以证明确实有超过 2/3 的节点同意在更高的 view 上进行新一轮共识。<br>然后，根据收到的所有 VIEW-CHANGE 消息中的 checkpoint 信息，找出最小值 min_s 和最大值 max_s，打包该区间内的每一个 sequence number 对应的 PRE-PREPARE 消息。<br>特别的，为了减少重复验证，如果在某个 sequence number 上从未进行过 view change（即第一轮就达成了共识），则 PRE-PREPARE 中包含一个特殊的 null 请求的摘要信息。</p>
+<p>具体逻辑参见下图：<br><img src="/2020/02/29/pbft-algorithm/20180814171838867.png" alt></p>
+<p>如果想要了解更多的算法细节，可以阅读论文原文：<br><a href="http://pmg.csail.mit.edu/papers/osdi99.pdf" target="_blank" rel="noopener">http://pmg.csail.mit.edu/papers/osdi99.pdf</a></p>
+
       
        <hr><span style="font-style: italic;color: gray;"> 转载请注明来源，欢迎对文章中的引用来源进行考证，欢迎指出任何有错误或不够清晰的表达。可以在下面评论区评论。 </span>
     </div>
 </article>
 
 
+
+<div class="article_copyright">
+    <p><span class="copy-title">文章标题:</span>PBFT实用拜占庭容错算法深入详解</p>
+    <p><span class="copy-title">文章字数:</span><span class="post-count">1.5k</span></p>
+    <p><span class="copy-title">本文作者:</span><a  title=""></a></p>
+    <p><span class="copy-title">发布时间:</span>2020-02-29, 18:31:28</p>
+    <p><span class="copy-title">最后更新:</span>2020-02-29, 18:46:25</p>
+    <span class="copy-title">原始链接:</span><a class="post-url" href="/2020/02/29/pbft-algorithm/" title="PBFT实用拜占庭容错算法深入详解">http://fooforlan.github.io/2020/02/29/pbft-algorithm/</a>
+    <p>
+        <span class="copy-title">版权声明:</span><i class="fa fa-creative-commons"></i> <a rel="license noopener" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" title="CC BY-NC-SA 4.0 International" target = "_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
+    </p>
+</div>
 
 
 
