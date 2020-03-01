@@ -4,6 +4,33 @@
   
     
     <entry>
+      <title>CentOS7 FTP安装与配置</title>
+      <link href="/2020/03/01/centos-vsftpd-setup/"/>
+      <url>/2020/03/01/centos-vsftpd-setup/</url>
+      
+        <content type="html"><![CDATA[<blockquote><p>本文由 <a href="http://ksria.com/simpread/" target="_blank" rel="noopener">简悦 SimpRead</a> 转码， 原文地址 <a href="https://www.cnblogs.com/haiyabtx/p/10762745.html" target="_blank" rel="noopener">https://www.cnblogs.com/haiyabtx/p/10762745.html</a></p></blockquote><h2 id="1、FTP-的安装"><a href="#1、FTP-的安装" class="headerlink" title="1、FTP 的安装"></a>1、FTP 的安装</h2><pre><code class="bash">#安装yum install -y vsftpd#设置开机启动systemctl enable vsftpd.service#启动systemctl start vsftpd.service#停止systemctl stop vsftpd.service#查看状态systemctl status vsftpd.service</code></pre><h2 id="2、配置-FTP"><a href="#2、配置-FTP" class="headerlink" title="2、配置 FTP "></a>2、配置 FTP </h2><pre><code class="bash">#打开配置文件vim /etc/vsftpd/vsftpd.conf#显示行号:set number#修改配置 12 行anonymous_enable=NO#修改配置 33 行anon_mkdir_write_enable=YES#修改配置48行chown_uploads=YES#修改配置72行async_abor_enable=YES#修改配置82行ascii_upload_enable=YES#修改配置83行ascii_download_enable=YES#修改配置86行ftpd_banner=Welcome to blah FTP service.#修改配置100行chroot_local_user=YES#添加下列内容到vsftpd.conf末尾use_localtime=YESlisten_port=21idle_session_timeout=300guest_enable=YESguest_username=vsftpduser_config_dir=/etc/vsftpd/vconfdata_connection_timeout=1virtual_use_local_privs=YESpasv_min_port=40000pasv_max_port=40010accept_timeout=5connect_timeout=1allow_writeable_chroot=YES</code></pre><h2 id="3、建立用户文件"><a href="#3、建立用户文件" class="headerlink" title="3、建立用户文件"></a>3、建立用户文件</h2><pre><code class="bash">#创建编辑用户文件vim /etc/vsftpd/virtusers#第一行为用户名，第二行为密码。不能使用root作为用户名 leo12345</code></pre><h2 id="4、生成用户数据文件"><a href="#4、生成用户数据文件" class="headerlink" title="4、生成用户数据文件"></a>4、生成用户数据文件</h2><pre><code class="bash">db_load -T -t hash -f /etc/vsftpd/virtusers /etc/vsftpd/virtusers.db#设定PAM验证文件，并指定对虚拟用户数据库文件进行读取chmod 600 /etc/vsftpd/virtusers.db </code></pre><h2 id="5、修改-etc-pam-d-vsftpd-文件"><a href="#5、修改-etc-pam-d-vsftpd-文件" class="headerlink" title="5、修改 /etc/pam.d/vsftpd 文件"></a>5、修改 /etc/pam.d/vsftpd 文件</h2><pre><code class="bash"># 修改前先备份 cp /etc/pam.d/vsftpd /etc/pam.d/vsftpd.bakvi /etc/pam.d/vsftpd#先将配置文件中原有的 auth 及 account 的所有配置行均注释掉auth sufficient /lib64/security/pam_userdb.so db=/etc/vsftpd/virtusers account sufficient /lib64/security/pam_userdb.so db=/etc/vsftpd/virtusers # 如果系统为32位，上面改为lib</code></pre><h2 id="6、新建系统用户-vsftpd，用户目录为-home-vsftpd"><a href="#6、新建系统用户-vsftpd，用户目录为-home-vsftpd" class="headerlink" title="6、新建系统用户 vsftpd，用户目录为 / home/vsftpd"></a>6、新建系统用户 vsftpd，用户目录为 / home/vsftpd</h2><pre><code class="bash">#用户登录终端设为/bin/false(即：使之不能登录系统)useradd vsftpd -d /home/vsftpd -s /bin/falsechown -R vsftpd:vsftpd /home/vsftpd</code></pre><h2 id="7、建立虚拟用户个人配置文件"><a href="#7、建立虚拟用户个人配置文件" class="headerlink" title="7、建立虚拟用户个人配置文件"></a>7、建立虚拟用户个人配置文件</h2><pre><code class="bash">mkdir /etc/vsftpd/vconfcd /etc/vsftpd/vconf#这里建立虚拟用户leo配置文件touch leo#编辑leo用户配置文件，内容如下，其他用户类似vi leolocal_root=/home/vsftpd/leo/write_enable=YESanon_world_readable_only=NOanon_upload_enable=YESanon_mkdir_write_enable=YESanon_other_write_enable=YES#建立leo用户根目录mkdir -p /home/vsftpd/leo/</code></pre><h2 id="8、防火墙设置"><a href="#8、防火墙设置" class="headerlink" title="8、防火墙设置"></a>8、防火墙设置</h2><pre><code class="bash">IPtables 的设置方式：vi /etc/sysconfig/iptables#编辑iptables文件，添加如下内容，开启21端口-A INPUT -m state --state NEW -m tcp -p tcp --dport 21 -j ACCEPT-A INPUT -m state --state NEW -m tcp -p tcp --dport 40000:40010 -j ACCEPTfirewall 的设置方式：firewall-cmd --zone=public --add-service=ftp --permanentfirewall-cmd --zone=public --add-port=21/tcp --permanentfirewall-cmd --zone=public --add-port=40000-40010/tcp --permanent </code></pre><h2 id="9、重启-vsftpd-服务器"><a href="#9、重启-vsftpd-服务器" class="headerlink" title="9、重启 vsftpd 服务器"></a>9、重启 vsftpd 服务器</h2><pre><code class="bash">systemctl restart vsftpd.service</code></pre><h2 id="10、使用-ftp-工具连接测试"><a href="#10、使用-ftp-工具连接测试" class="headerlink" title="10、使用 ftp 工具连接测试"></a>10、使用 ftp 工具连接测试</h2><p>这个时候，使用 ftp 的工具连接时，我们发现是可以连接的。传输文件的时候，会发现文件上传和下载都会出现</p><p>500、503 、200 等问题。这个时候，可以进行以下操作：</p><h3 id="方式一、关闭-SELINUX"><a href="#方式一、关闭-SELINUX" class="headerlink" title="方式一、关闭 SELINUX"></a>方式一、关闭 SELINUX</h3><pre><code class="bash">#打开SELINUX配置文件vim /etc/selinux/config#修改配置参数#注释  SELINUX=enforcing#增加  SELINUX=disabled#修改完成后，需要重启！</code></pre><h3 id="方式二、修改-SELINUX"><a href="#方式二、修改-SELINUX" class="headerlink" title="方式二、修改 SELINUX"></a>方式二、修改 SELINUX</h3><pre><code class="bash">#暂时让SELinux进入Permissive模式setenforce 0 #列出与ftp相关的设置getsebool -a|grep ftp#以下是显示出来的权限，off是关闭权限，on是打开权限。不同的机器显示的可能不一样。我看了我的显示的，和网上其他教程就不太一样ftp_home_dir --&gt; offftpd_anon_write --&gt; offftpd_connect_all_unreserved --&gt; offftpd_connect_db --&gt; offftpd_full_access --&gt; offftpd_use_cifs --&gt; offftpd_use_fusefs --&gt; offftpd_use_nfs --&gt; offftpd_use_passive_mode --&gt; offhttpd_can_connect_ftp --&gt; offhttpd_enable_ftp_server --&gt; offsftpd_anon_write --&gt; offsftpd_enable_homedirs --&gt; offsftpd_full_access --&gt; offsftpd_write_ssh_home --&gt; offtftp_anon_write --&gt; offtftp_home_dir --&gt; off#将包含有 ftp_home_dir 和 ftpd_full_access 相关的都设置为 1setsebool -P ftp_home_dir 1setsebool -P allow_ftpd_anon_write 1setsebool -P ftp_home_dir 1setenforce 1 #进入Enforcing模式</code></pre><h3 id="方式三、-SELINUX-不对-vsftp-不做任何限制"><a href="#方式三、-SELINUX-不对-vsftp-不做任何限制" class="headerlink" title="方式三、 SELINUX 不对 vsftp 不做任何限制"></a>方式三、 <em>SELINUX 不对 vsftp 不做任何限制</em></h3><pre><code class="bash">setsebool -P ftpd_connect_all_unreserved 1</code></pre><p>这个时候再使用工具连接，你发现，就可以正常的上传和下载文件了。</p><p>如果还是有问题尝试给我们用户的 ftp 目录，设置一下操作权限</p><pre><code class="bash">chmod -R 775 /home/vsftpd/leo</code></pre><h3 id="FTP-目录权限"><a href="#FTP-目录权限" class="headerlink" title="FTP 目录权限"></a>FTP 目录权限</h3><p>其它位置复制过来的文件要更改用户所有权，比如更改网站目录到FTP</p><pre><code class="bash">#chown [-R] 账号名称:组群  文件/目录chown -R vsftpd:vsftpd www#www用户加入vsftpd用户权#usermod -a -G {用户组名} {用户名}usermod -a -G vsftpd www#chmod -R g+rwx {文件名}chmod -R g+rwx vsftpd#直接给所用权限也可以chmod -R a+rwx vsftpd</code></pre><h3 id="FTP工具设置"><a href="#FTP工具设置" class="headerlink" title="FTP工具设置"></a>FTP工具设置</h3><ul><li>加密方式：只使用明文FTP</li><li>传输设置：主动</li></ul>]]></content>
+      
+      
+      <categories>
+          
+          <category> 安装部署 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> FTP </tag>
+            
+            <tag> Centos </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>基于 Tendermint 的区块链漂流瓶简单实现</title>
       <link href="/2020/02/29/tendermint-demo-msg-bottle/"/>
       <url>/2020/02/29/tendermint-demo-msg-bottle/</url>
